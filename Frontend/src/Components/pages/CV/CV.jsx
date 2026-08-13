@@ -4,9 +4,6 @@ export default function CV() {
     return (
         <div className="wrapper max-w-5xl py-16 sm:py-20">
             <header className="mx-auto max-w-3xl text-center">
-                <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--text-primary)">
-                    Curriculum vitae
-                </p>
                 <h1 className="text-4xl font-bold sm:text-5xl">Mowafak Almahaini</h1>
                 <address className="font-interface mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm not-italic text-(--text-secondary) sm:text-base">
                     <span>Cairo, Egypt · Open to relocate</span>
