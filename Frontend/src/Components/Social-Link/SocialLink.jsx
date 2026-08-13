@@ -11,7 +11,7 @@ export default function SocialLink({ href, icon, label, color }) {
             <div className="text-6xl transform transition-transform duration-300 group-hover:scale-110">
                 {icon}
             </div>
-            <span className="text-xl font-medium text-(--text-primary) underline-offset-4 group-hover:underline group-hover:decoration-(--accent)">
+            <span className="text-xl font-medium text-(--text-primary) transition-colors group-hover:text-(--accent)">
                 {label}
             </span>
         </a>

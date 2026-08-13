@@ -16,7 +16,7 @@ function ProjectLinks({ project }) {
                     href={project.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-(--text-primary) underline decoration-(--accent) underline-offset-4"
+                    className="text-(--accent) transition-colors hover:text-(--accent-hover)"
                 >
                     Live site
                 </a>
@@ -25,7 +25,7 @@ function ProjectLinks({ project }) {
                 href={project.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-(--text-primary) underline-offset-4 hover:underline hover:decoration-(--accent)"
+                className="text-(--text-primary) transition-colors hover:text-(--accent)"
             >
                 Source
             </a>
@@ -151,6 +151,9 @@ export default function About() {
                             with its software engineering team.
                         </p>
                         <p className="mt-4 text-lg leading-relaxed text-(--text-secondary)">
+                            I work with React, TypeScript, and Python, with a focus on practical AI integrations.
+                        </p>
+                        <p className="mt-4 text-lg leading-relaxed text-(--text-secondary)">
                             I love problem-solving! I reached{' '}
                             <strong className="codeforces-rank">Specialist</strong> on Codeforces and participated
                             in the ECPC programming contest (solving 6/13 problems). I am currently pursuing the
@@ -162,9 +165,6 @@ export default function About() {
 
             <section aria-labelledby="work-heading" className="pt-24 sm:pt-28">
                 <div className="mb-10 max-w-2xl">
-                    <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--text-primary)">
-                        Selected work
-                    </p>
                     <h2 id="work-heading" className="text-3xl font-bold sm:text-4xl">Things I’ve built</h2>
                 </div>
 
@@ -212,28 +212,44 @@ export default function About() {
                     ))}
                 </div>
 
-                {githubActivity && (
-                    <p className="font-interface mt-16 max-w-3xl text-sm leading-relaxed text-(--text-secondary)">
-                        Across these {githubActivity.projects.length} projects, I’ve authored{' '}
-                        {githubActivity.totalCommits.toLocaleString()} commits, according to{' '}
-                        <a
-                            href="https://github.com/SuperMo0"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-(--text-primary) underline decoration-(--accent) underline-offset-4"
-                        >
-                            GitHub
-                        </a>.
-                    </p>
-                )}
+                <div className="mt-16 max-w-4xl">
+                    {githubActivity && (
+                        <p className="font-interface max-w-3xl text-sm leading-relaxed text-(--text-secondary)">
+                            Across these {githubActivity.projects.length} projects, I’ve authored{' '}
+                            {githubActivity.totalCommits.toLocaleString()} commits, according to{' '}
+                            <a
+                                href="https://github.com/SuperMo0"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-(--text-primary) transition-colors hover:text-(--accent)"
+                            >
+                                GitHub
+                            </a>.
+                        </p>
+                    )}
+                    <a
+                        href="https://github.com/SuperMo0"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-8 block transition-transform duration-300 hover:scale-[1.02]"
+                    >
+                        <img
+                            src="/images/github-contributions.webp"
+                            alt="Mowafak Almahaini's GitHub contribution history and activity overview"
+                            width="965"
+                            height="584"
+                            className="w-full rounded-lg"
+                            loading="lazy"
+                        />
+                    </a>
+                </div>
             </section>
 
             <section aria-labelledby="competitive-heading" className="pt-24 sm:pt-28">
                 <div className="mb-10 max-w-2xl">
-                    <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--text-primary)">
+                    <h2 id="competitive-heading" className="text-3xl font-bold sm:text-4xl">
                         Competitive programming
-                    </p>
-                    <h2 id="competitive-heading" className="text-3xl font-bold sm:text-4xl">A dated record</h2>
+                    </h2>
                 </div>
 
                 <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] lg:gap-14">

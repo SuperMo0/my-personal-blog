@@ -5,8 +5,8 @@ import { MdNightlight } from 'react-icons/md';
 
 export default function Header({ handleThemeChange }) {
     const navLinkClass = ({ isActive }) => (
-        `font-interface text-lg font-medium text-(--text-primary) underline-offset-4 ${
-            isActive ? 'underline decoration-2 decoration-(--accent)' : 'hover:underline hover:decoration-(--accent)'
+        `font-interface text-lg font-medium transition-colors ${
+            isActive ? 'text-(--accent)' : 'text-(--text-primary) hover:text-(--accent)'
         }`
     );
 
@@ -19,7 +19,7 @@ export default function Header({ handleThemeChange }) {
                 </NavLink>
 
                 <nav aria-label="Primary navigation" className="flex items-center gap-2 min-[380px]:gap-3 sm:gap-6">
-                    <NavLink className={navLinkClass} to="/">Home</NavLink>
+                    <NavLink className={navLinkClass} to="/">Blogs</NavLink>
                     <NavLink className={navLinkClass} to="/about">About</NavLink>
                     <NavLink className={navLinkClass} to="/cv">CV</NavLink>
                     <button
