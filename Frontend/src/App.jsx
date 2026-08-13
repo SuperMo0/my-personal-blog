@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import Home from './Components/pages/Home/Home';
 import Article from './Components/pages/Article/Article';
 import About from './Components/pages/About/About';
-import Contact from './Components/pages/Contact/Contact';
+import CV from './Components/pages/CV/CV';
 import Login from './Components/pages/Login/Login';
 import DashBoard from './Components/pages/DashBoard/DashBoard';
 import EditorPage from './Components/pages/EditorPage/EditorPage';
@@ -43,7 +43,8 @@ function App() {
         <Route path='/' element={<Guest handleThemeChange={handleThemeChange} />}>
           <Route index element={<Home />} />
           <Route path='/about' element={<About />} />
-          <Route path='/contact' element={<Contact dark={dark} />} />
+          <Route path='/cv' element={<CV />} />
+          <Route path='/contact' element={<Navigate to='/about#social' replace />} />
           <Route path='/blogs/:id' element={<Article />} />
         </Route>
 

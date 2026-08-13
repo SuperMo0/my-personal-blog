@@ -1,66 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router';
-import { MdNightlight, MdMenu, MdClose } from "react-icons/md";
-import { BsSunFill } from "react-icons/bs";
+import { BsSunFill } from 'react-icons/bs';
+import { MdNightlight } from 'react-icons/md';
 
 export default function Header({ handleThemeChange }) {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-    const navLinkClass = ({ isActive }) => {
-        return `text-lg font-medium transition-colors hover:text-[var(--accent)] ${isActive ? 'text-[var(--accent)]' : 'text-[var(--text-primary)]'
-            }`;
-    }
+    const navLinkClass = ({ isActive }) => (
+        `font-interface text-sm font-semibold transition-colors hover:text-(--accent) ${
+            isActive ? 'text-(--accent)' : 'text-(--text-primary)'
+        }`
+    );
 
     return (
-        <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-(--bg-primary)/90 border-b border-(--border-color) transition-colors duration-300">
-            <div className="wrapper flex justify-between items-center h-16">
+        <header className="sticky top-0 z-40 w-full border-b border-(--border-color) bg-(--bg-primary)/90 backdrop-blur-md transition-colors duration-300">
+            <div className="wrapper flex h-14 items-center justify-between gap-2 px-3 sm:h-16 sm:px-6 lg:px-8">
+                <NavLink to="/" className="shrink-0 text-lg font-bold tracking-tighter sm:text-xl" aria-label="Mowafak Almahaini, home">
+                    <span className="text-(--accent)">Mowafak</span>
+                    <span className="hidden sm:inline"> Almahaini</span>
+                </NavLink>
 
-                <div className="font-bold text-2xl tracking-tighter">
-                    <NavLink to="/">
-                        <span className="text-(--accent)">My</span>Blog
-                    </NavLink>
-                </div>
-
-                <nav className="hidden md:flex items-center gap-8">
+                <nav aria-label="Primary navigation" className="flex items-center gap-2 min-[380px]:gap-3 sm:gap-6">
                     <NavLink className={navLinkClass} to="/">Home</NavLink>
                     <NavLink className={navLinkClass} to="/about">About</NavLink>
-                    <NavLink className={navLinkClass} to="/contact">Contact</NavLink>
-
-                    <NavLink className={navLinkClass} to="/admin/dashboard">Admin</NavLink>
-
+                    <NavLink className={navLinkClass} to="/cv">CV</NavLink>
                     <button
+                        type="button"
                         onClick={handleThemeChange}
-                        className="p-2 rounded-full hover:bg-(--bg-card) transition-colors text-xl"
-                        aria-label="Toggle Theme"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center text-lg transition-transform hover:scale-110"
+                        aria-label="Toggle theme"
                     >
-                        <div className="hidden dark:block"><BsSunFill className="text-yellow-400" /></div>
-                        <div className="block dark:hidden"><MdNightlight className="text-slate-700" /></div>
+                        <BsSunFill className="hidden text-yellow-400 dark:block" aria-hidden="true" />
+                        <MdNightlight className="block text-slate-700 dark:hidden" aria-hidden="true" />
                     </button>
                 </nav>
-
-                <button className="md:hidden text-2xl p-2" onClick={toggleMenu}>
-                    {isMenuOpen ? <MdClose /> : <MdMenu />}
-                </button>
             </div>
-            {isMenuOpen && (
-                <div className="md:hidden absolute top-16 left-0 w-full bg-(--bg-card) border-b border-(--border-color) shadow-xl animate-fade-in-down">
-                    <nav className="flex flex-col p-6 space-y-4 text-center">
-                        <NavLink onClick={toggleMenu} className={navLinkClass} to="/">Home</NavLink>
-                        <NavLink onClick={toggleMenu} className={navLinkClass} to="/about">About</NavLink>
-                        <NavLink onClick={toggleMenu} className={navLinkClass} to="/contact">Contact</NavLink>
-                        <NavLink onClick={toggleMenu} className={navLinkClass} to="/admin/login">Login</NavLink>
-
-                        <button
-                            onClick={() => { handleThemeChange(); toggleMenu(); }}
-                            className="mt-4 mx-auto p-2 bg-(--bg-primary) rounded-full border border-(--border-color)"
-                        >
-                            <div className="hidden dark:block text-yellow-400"><BsSunFill /> Light Mode</div>
-                            <div className="block dark:hidden text-slate-700"><MdNightlight /> Dark Mode</div>
-                        </button>
-                    </nav>
-                </div>
-            )}
         </header>
     );
 }

@@ -4,6 +4,7 @@
 
 @theme {
   --font-body: "Merriweather", serif;
+  --font-interface: "Inter", sans-serif;
 }
 
 @layer base {
@@ -32,6 +33,10 @@
   body {
     font-family: var(--font-body);
     @apply bg-(--bg-primary) text-(--text-primary) transition-colors duration-300 min-h-screen;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 }
 
@@ -109,5 +114,13 @@
         var(--c3) 0 50%
       );
     background-size: var(--s) calc(var(--s) * tan(30deg));
+  }
+
+  .codeforces-rank {
+    color: #087d91;
+  }
+
+  [data-dark="true"] .codeforces-rank {
+    color: #67e8f9;
   }
 }
