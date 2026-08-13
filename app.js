@@ -9,11 +9,13 @@ import { createGitHubActivity } from './utils/github-activity.js';
 export function createApp({
     githubToken,
     githubFetch,
+    githubRequestTimeoutMs,
 } = {}) {
     const app = express();
     const getGitHubActivity = createGitHubActivity({
         token: githubToken,
         fetchImpl: githubFetch,
+        requestTimeoutMs: githubRequestTimeoutMs,
     });
 
     app.use(cors());

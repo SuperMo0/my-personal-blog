@@ -11,6 +11,7 @@ export const GITHUB_PROJECTS = [
 ];
 
 const DEFAULT_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
+const DEFAULT_REQUEST_TIMEOUT_MS = 10 * 1000;
 
 function lastPageFrom(linkHeader) {
     if (!linkHeader) return null;
@@ -26,7 +27,7 @@ function lastPageFrom(linkHeader) {
     return Number.isInteger(page) && page >= 1 ? page : null;
 }
 
-async function authoredActivity({ repository, author, token, fetchImpl }) {
+async function projectActivity({ repository, author, token, fetchImpl, requestTimeoutMs }) {
     const commitsUrl = new URL(`/repos/${repository}/commits`, 'https://api.github.com');
     commitsUrl.searchParams.set('author', author);
     commitsUrl.searchParams.set('per_page', '1');
@@ -38,9 +39,10 @@ async function authoredActivity({ repository, author, token, fetchImpl }) {
         'User-Agent': 'SuperMo0-personal-blog',
         'X-GitHub-Api-Version': '2022-11-28',
     };
+    const signal = AbortSignal.timeout(requestTimeoutMs);
     const [commitsResponse, repositoryResponse] = await Promise.all([
-        fetchImpl(commitsUrl, { headers }),
-        fetchImpl(repositoryUrl, { headers }),
+        fetchImpl(commitsUrl, { headers, signal }),
+        fetchImpl(repositoryUrl, { headers, signal }),
     ]);
 
     if (!commitsResponse.ok || !repositoryResponse.ok) {
@@ -67,6 +69,7 @@ async function authoredActivity({ repository, author, token, fetchImpl }) {
 export function createGitHubActivity({
     token = process.env.GITHUB_TOKEN,
     fetchImpl = globalThis.fetch,
+    requestTimeoutMs = DEFAULT_REQUEST_TIMEOUT_MS,
 } = {}) {
     let cachedActivity = null;
     let expiresAt = 0;
@@ -79,11 +82,12 @@ export function createGitHubActivity({
         const projects = await Promise.all(GITHUB_PROJECTS.map(async ({ slug, repository }) => ({
             slug,
             repository,
-            ...await authoredActivity({
+            ...await projectActivity({
                 repository,
                 author: GITHUB_AUTHOR,
                 token,
                 fetchImpl,
+                requestTimeoutMs,
             }),
         })));
 

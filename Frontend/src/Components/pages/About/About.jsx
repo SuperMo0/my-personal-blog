@@ -53,7 +53,7 @@ function ProjectActivity({ activity }) {
     const commitLabel = activity.commits === 1 ? 'commit' : 'commits';
 
     return (
-        <p className="project-activity font-interface text-xs text-(--text-secondary)" aria-hidden="true">
+        <p className="project-activity font-interface text-xs text-(--text-secondary)">
             {activity.commits.toLocaleString()} authored {commitLabel}
             {lastActivity && <> · last activity {lastActivity}</>}
         </p>

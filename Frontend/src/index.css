@@ -144,7 +144,8 @@
       transition: opacity 160ms ease, transform 160ms ease;
     }
 
-    .project-entry:hover .project-activity {
+    .project-entry:hover .project-activity,
+    .project-entry:focus-within .project-activity {
       opacity: 1;
       transform: translateY(0);
     }

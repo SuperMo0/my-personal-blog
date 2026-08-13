@@ -372,4 +372,19 @@ describe('GitHub activity', () => {
         assert.equal(response.status, 503);
         assert.deepEqual(response.body, { message: 'GitHub activity is temporarily unavailable' });
     });
+
+    test('returns an unavailable response when GitHub does not respond', async () => {
+        const activityApp = createApp({
+            githubToken: 'server-only-test-token',
+            githubRequestTimeoutMs: 10,
+            githubFetch: async (url, { signal }) => new Promise((resolve, reject) => {
+                signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+            }),
+        });
+
+        const response = await request(activityApp).get('/api/github-activity');
+
+        assert.equal(response.status, 503);
+        assert.deepEqual(response.body, { message: 'GitHub activity is temporarily unavailable' });
+    });
 });
