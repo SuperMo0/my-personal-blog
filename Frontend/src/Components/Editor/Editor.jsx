@@ -1,13 +1,14 @@
 import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
-export default function MyEditor({ initialValue, handleInit, dark }) {
+export default function MyEditor({ initialValue, handleInit, dark, readOnly = false }) {
 
     return (
         <Editor
             licenseKey='gpl'
             key={dark ? "dark-editor" : "light-editor"}
             initialValue={initialValue}
+            disabled={readOnly}
             tinymceScriptSrc={'/tinymce/tinymce.min.js'}
             onInit={handleInit}
             init={{

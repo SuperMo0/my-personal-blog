@@ -1,47 +1,52 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../../Auth/AuthProvider';
+import { useAuth } from '../../../Auth/AuthContext.js';
 import api from './../../../utils/Api.js';
 import { useNavigate } from 'react-router';
 
 export default function Login() {
     const { login } = useAuth();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [message, setMessage] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loadingAction, setLoadingAction] = useState(null);
     const navigate = useNavigate();
 
-    async function handleLogin() {
-        setLoading(true);
+    async function signIn(path, body, action) {
+        setLoadingAction(action);
         setMessage(null);
 
         try {
-            const [res, ok] = await api('/admin/login', {
+            const [response, ok] = await api(path, {
                 method: 'post',
-                body: JSON.stringify({ email: 'guest@email.com', password: '123' })
+                body: body ? JSON.stringify(body) : undefined,
             });
 
             if (!ok) {
-                setMessage(res.message || "Login failed");
-            } else {
-                login(res.token);
-                navigate('/admin/dashboard');
+                setMessage(response.message || 'Login failed');
+                return;
             }
-        } catch (error) {
-            setMessage("Network error occurred");
+
+            login(response.token);
+            navigate('/admin/dashboard');
+        } catch {
+            setMessage('Network error occurred');
         } finally {
-            setLoading(false);
+            setLoadingAction(null);
         }
+    }
+
+    function handleOwnerLogin(event) {
+        event.preventDefault();
+        signIn('/admin/login', { email, password }, 'owner');
     }
 
     return (
         <div className="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8 bg-(--bg-card) p-10 rounded-2xl shadow-xl border border-(--border-color)">
-
                 <div className="text-center">
-                    <h2 className="mt-2 text-3xl font-extrabold tracking-tight">
-                        Welcome
-                    </h2>
+                    <h2 className="mt-2 text-3xl font-extrabold tracking-tight">Welcome</h2>
                     <p className="mt-2 text-sm text-(--text-secondary)">
-                        Click below to explore the admin dashboard
+                        Explore the dashboard safely, or sign in as the owner.
                     </p>
                 </div>
 
@@ -52,22 +57,51 @@ export default function Login() {
                 )}
 
                 <button
-                    onClick={handleLogin}
-                    disabled={true}  /*todo: create role based user login*/
-                    className="w-full btn-primary flex justify-center items-center gap-2"
+                    type="button"
+                    onClick={() => signIn('/admin/demo-login', null, 'demo')}
+                    disabled={loadingAction !== null}
+                    className="w-full btn-primary flex justify-center items-center gap-2 disabled:opacity-60"
                 >
-                    {loading ? (
-                        <>
-                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Signing in...
-                        </>
-                    ) : (
-                        "Give Me Access"
-                    )}
+                    {loadingAction === 'demo' ? 'Entering demo…' : 'Enter the demo'}
                 </button>
+
+                <div className="flex items-center gap-3 text-xs uppercase tracking-wider text-(--text-secondary)">
+                    <span className="h-px grow bg-(--border-color)" />
+                    Owner sign-in
+                    <span className="h-px grow bg-(--border-color)" />
+                </div>
+
+                <form onSubmit={handleOwnerLogin} className="space-y-4">
+                    <label className="block">
+                        <span className="text-sm font-medium">Email</span>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                            autoComplete="username"
+                            required
+                            className="mt-1 w-full rounded-lg border border-(--border-color) bg-(--bg-primary) px-3 py-2"
+                        />
+                    </label>
+                    <label className="block">
+                        <span className="text-sm font-medium">Password</span>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                            autoComplete="current-password"
+                            required
+                            className="mt-1 w-full rounded-lg border border-(--border-color) bg-(--bg-primary) px-3 py-2"
+                        />
+                    </label>
+                    <button
+                        type="submit"
+                        disabled={loadingAction !== null}
+                        className="w-full rounded-lg border border-(--border-color) px-4 py-2.5 font-semibold hover:border-(--accent) disabled:opacity-60"
+                    >
+                        {loadingAction === 'owner' ? 'Signing in…' : 'Sign in as owner'}
+                    </button>
+                </form>
             </div>
         </div>
     );

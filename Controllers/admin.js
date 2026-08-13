@@ -6,7 +6,7 @@ export function handleSucessLogin(req, res) {
 
 export async function handleGetAllBlogs(req, res) {
     try {
-        let blogs = await queries.getAllBlogs();
+        let blogs = await queries.getAllBlogs(req.user);
         res.json({ blogs });
     } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -16,7 +16,7 @@ export async function handleGetAllBlogs(req, res) {
 
 export async function handleGetBlog(req, res) {
     try {
-        let blog = await queries.getBlog(req.params.id);
+        let blog = await queries.getBlog(req.params.id, req.user);
         if (!blog) {
             return res.status(404).json({ message: "Blog not found" });
         }
@@ -29,7 +29,7 @@ export async function handleGetBlog(req, res) {
 
 export async function handleGetBlogComments(req, res) {
     try {
-        let comments = await queries.getAllBlogComments(req.params.id);
+        let comments = await queries.getAllBlogComments(req.params.id, req.user);
         res.json({ comments });
     } catch (error) {
         console.error("Error fetching comments:", error);

@@ -1,8 +1,14 @@
 import pool from './pool.js'
 
-export async function getAllBlogs() {
-    let sql = `select id, title, created_at, likes, published from blogs order by created_at desc`;
-    let result = await pool.query(sql);
+export async function getAllBlogs(user) {
+    const isAdmin = user.role === 'admin';
+    let sql = `
+        select id, title, created_at, likes, published
+        from blogs
+        where $1 = true or published = true or author_id = $2
+        order by created_at desc
+    `;
+    let result = await pool.query(sql, [isAdmin, user.id]);
     return result.rows;
 }
 
@@ -12,19 +18,31 @@ export async function getAllComments() {
     return result.rows;
 }
 
-export async function getAllBlogComments(blog_id) {
-    let sql = `select * from comments where blog_id=$1 order by created_at desc`;
-    let result = await pool.query(sql, [blog_id]);
+export async function getAllBlogComments(blog_id, user) {
+    const isAdmin = user.role === 'admin';
+    let sql = `
+        select comments.*
+        from comments
+        join blogs on blogs.id = comments.blog_id
+        where comments.blog_id = $1
+          and ($2 = true or blogs.published = true or blogs.author_id = $3)
+        order by comments.created_at desc
+    `;
+    let result = await pool.query(sql, [blog_id, isAdmin, user.id]);
     return result.rows;
 }
 
-export async function getBlog(id) {
-    let sql = `select * from blogs where id=$1`;
-    let result = await pool.query(sql, [id]);
+export async function getBlog(id, user) {
+    const isAdmin = user.role === 'admin';
+    let sql = `
+        select * from blogs
+        where id = $1 and ($2 = true or published = true or author_id = $3)
+    `;
+    let result = await pool.query(sql, [id, isAdmin, user.id]);
     return result.rows[0];
 }
 
-export async function getAdmin(email) {
+export async function getUserByEmail(email) {
     let sql = `select * from users where email=$1`;
     let result = await pool.query(sql, [email]);
     return result.rows[0];
