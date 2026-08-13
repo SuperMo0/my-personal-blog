@@ -5,7 +5,7 @@ import { MdNightlight } from 'react-icons/md';
 
 export default function Header({ handleThemeChange }) {
     const navLinkClass = ({ isActive }) => (
-        `font-interface text-sm font-semibold text-(--text-primary) underline-offset-4 ${
+        `font-interface text-lg font-medium text-(--text-primary) underline-offset-4 ${
             isActive ? 'underline decoration-2 decoration-(--accent)' : 'hover:underline hover:decoration-(--accent)'
         }`
     );
