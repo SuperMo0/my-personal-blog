@@ -15,7 +15,7 @@ function ProjectLinks({ project }) {
                     href={project.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-(--accent) underline-offset-4 hover:underline"
+                    className="text-(--text-primary) underline decoration-(--accent) underline-offset-4"
                 >
                     Live site
                 </a>
@@ -24,7 +24,7 @@ function ProjectLinks({ project }) {
                 href={project.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-(--text-primary) underline-offset-4 hover:text-(--accent) hover:underline"
+                className="text-(--text-primary) underline-offset-4 hover:underline hover:decoration-(--accent)"
             >
                 Source
             </a>
@@ -76,7 +76,7 @@ export default function About() {
                     </div>
 
                     <div className="max-w-2xl text-center md:text-left">
-                        <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--accent)">
+                        <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--text-primary)">
                             About
                         </p>
                         <h1 id="about-heading" className="text-4xl font-bold leading-tight sm:text-5xl">
@@ -93,7 +93,7 @@ export default function About() {
 
             <section aria-labelledby="work-heading" className="pt-24 sm:pt-28">
                 <div className="mb-10 max-w-2xl">
-                    <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--accent)">
+                    <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--text-primary)">
                         Selected work
                     </p>
                     <h2 id="work-heading" className="text-3xl font-bold sm:text-4xl">Things I’ve built</h2>
@@ -137,7 +137,7 @@ export default function About() {
 
             <section aria-labelledby="competitive-heading" className="pt-24 sm:pt-28">
                 <div className="mb-10 max-w-2xl">
-                    <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--accent)">
+                    <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--text-primary)">
                         Competitive programming
                     </p>
                     <h2 id="competitive-heading" className="text-3xl font-bold sm:text-4xl">A dated record</h2>
@@ -185,7 +185,7 @@ export default function About() {
 
             <section id="social" aria-labelledby="social-heading" className="scroll-mt-24 pt-24 sm:pt-28">
                 <div className="text-center">
-                    <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--accent)">
+                    <p className="font-interface mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-(--text-primary)">
                         Find me online
                     </p>
                     <h2 id="social-heading" className="text-3xl font-bold sm:text-4xl">Let’s connect</h2>

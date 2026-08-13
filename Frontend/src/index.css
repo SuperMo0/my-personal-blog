@@ -35,8 +35,10 @@
     @apply bg-(--bg-primary) text-(--text-primary) transition-colors duration-300 min-h-screen;
   }
 
-  html {
-    scroll-behavior: smooth;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 }
 
