@@ -144,9 +144,17 @@ export default function About() {
                             Hi, I’m <span className="text-(--accent)">Mowafak</span>.
                         </h1>
                         <p className="mt-6 text-lg leading-relaxed text-(--text-secondary)">
-                            I built this blog to document my journey in software engineering. I recently
-                            finished <span className="font-semibold text-(--text-primary)">The Odin Project</span> curriculum,
-                            where I created more than 20 different full-stack projects.
+                            I built this blog to document my journey in software engineering. I completed{' '}
+                            <span className="font-semibold text-(--text-primary)">The Odin Project</span> curriculum,
+                            where I created more than 20 full-stack projects. I recently joined{' '}
+                            <span className="font-semibold text-(--text-primary)">SYNC</span>, and I’m currently working
+                            with its software engineering team.
+                        </p>
+                        <p className="mt-4 text-lg leading-relaxed text-(--text-secondary)">
+                            I love problem-solving! I reached{' '}
+                            <strong className="codeforces-rank">Specialist</strong> on Codeforces and participated
+                            in the ECPC programming contest (solving 6/13 problems). I am currently pursuing the
+                            Expert rank.
                         </p>
                     </div>
                 </div>
