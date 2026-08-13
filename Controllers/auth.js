@@ -2,6 +2,8 @@ import { compare } from './../utils/password.js'
 import * as queries from './../db/admin-queries.js'
 import * as jwt from './../utils/jwt.js'
 
+const DEFAULT_DEMO_EMAIL = 'demo@my-personal-blog.local';
+
 function createSessionToken(user) {
     return jwt.signToken({
         name: user.name,
@@ -35,9 +37,8 @@ export async function authenticateAdmin(req, res) {
 
 export async function authenticateDemo(req, res) {
     try {
-        const user = process.env.DEMO_EMAIL
-            ? await queries.getUserByEmail(process.env.DEMO_EMAIL)
-            : null;
+        const demoEmail = process.env.DEMO_EMAIL || DEFAULT_DEMO_EMAIL;
+        const user = await queries.getUserByEmail(demoEmail);
 
         if (!user || user.role !== 'viewer') {
             return res.status(503).json({ message: 'The read-only demo account is unavailable' });

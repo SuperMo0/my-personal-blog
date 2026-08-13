@@ -24,7 +24,7 @@ unset ADMIN_EMAIL ADMIN_PASSWORD DEMO_PASSWORD
 
 The command is safe to rerun. It finds accounts by email, preserves their IDs and article authorship, and updates their password hashes and roles. Rerun it with a new `ADMIN_PASSWORD` whenever the owner's password should change. It also keeps two demo drafts available and reports any user rows whose email does not match the configured admin or demo account.
 
-Keep `DEMO_EMAIL` in the deployed application's runtime environment so the one-click demo button can find the viewer account. The password variables are needed only while provisioning and should be removed from the shell afterward.
+The one-click demo uses `demo@my-personal-blog.local` by default. If you provision a different demo address, keep that `DEMO_EMAIL` in the deployed application's runtime environment. The password variables are needed only while provisioning and should be removed from the shell afterward.
 
 ## Configure GitHub activity
 

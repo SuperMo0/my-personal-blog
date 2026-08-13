@@ -197,6 +197,25 @@ describe('read-only demo access', () => {
         assert.equal(payload.role, 'viewer');
     });
 
+    test('uses the dedicated demo address when no runtime override is configured', async () => {
+        await testPool.query(
+            "update users set email = 'demo@my-personal-blog.local' where id = 200",
+        );
+        const configuredDemoEmail = process.env.DEMO_EMAIL;
+        delete process.env.DEMO_EMAIL;
+
+        try {
+            const response = await request(app).post('/api/admin/demo-login');
+            const payload = jwt.verify(response.body.token, process.env.SECRET);
+
+            assert.equal(response.status, 200);
+            assert.equal(payload.email, 'demo@my-personal-blog.local');
+            assert.equal(payload.role, 'viewer');
+        } finally {
+            process.env.DEMO_EMAIL = configuredDemoEmail;
+        }
+    });
+
     test('lets a viewer read visible articles and comments', async () => {
         const { body: { token } } = await login('demo@example.com', viewerPassword);
 
