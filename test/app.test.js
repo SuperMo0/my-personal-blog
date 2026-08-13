@@ -73,7 +73,56 @@ async function resetDatabase() {
     );
 }
 
-const { default: app } = await import('../app.js');
+const { createApp, default: app } = await import('../app.js');
+
+const githubRepositories = [
+    'SuperMo0/movies-club',
+    'SuperMo0/my-chatting-app',
+    'sync-ngo-sy/sync-hub-v2',
+    'SuperMo0/my-personal-blog',
+    'SuperMo0/ai-engineering-curriculum',
+    'SuperMo0/multi-model-ai-assistant',
+    'SuperMo0/langgraph-automated-research-agent',
+];
+
+function githubResponse(commitCount, latestAuthoredCommitAt) {
+    const headers = { 'content-type': 'application/json' };
+
+    if (commitCount > 1) {
+        headers.link = `<https://api.github.com/repositories/1/commits?per_page=1&page=${commitCount}>; rel="last"`;
+    }
+
+    const commits = commitCount === 0 ? [] : [{
+        commit: { author: { date: latestAuthoredCommitAt } },
+    }];
+    return new Response(JSON.stringify(commits), { status: 200, headers });
+}
+
+function createGitHubFetch(figures) {
+    return async (url, options) => {
+        const requestUrl = new URL(url);
+        const repository = githubRepositories.find((name) => requestUrl.pathname.includes(`/repos/${name}`));
+        const isCommitsRequest = requestUrl.pathname.endsWith('/commits');
+        const isAuthoredRequest = !isCommitsRequest || requestUrl.searchParams.get('author') === 'SuperMo0';
+        const hasServerToken = options?.headers?.Authorization === 'Bearer server-only-test-token';
+
+        if (!isAuthoredRequest || !hasServerToken) {
+            return new Response(JSON.stringify({ message: 'unauthorized' }), {
+                status: 401,
+                headers: { 'content-type': 'application/json' },
+            });
+        }
+
+        const figure = figures[repository];
+
+        return isCommitsRequest
+            ? githubResponse(figure.commits, '2025-01-01T12:00:00Z')
+            : new Response(JSON.stringify({ pushed_at: figure.lastActivityAt }), {
+                status: 200,
+                headers: { 'content-type': 'application/json' },
+            });
+    };
+}
 
 async function login(email, password, extraBody = {}) {
     return request(app)
@@ -261,5 +310,66 @@ describe('read-only demo access', () => {
         assert.equal(malformed.status, 403);
         assert.equal(wrongScheme.status, 403);
         assert.equal(expired.status, 403);
+    });
+});
+
+describe('GitHub activity', () => {
+    test('returns authored figures for the seven projects and serves a second request from cache', async () => {
+        const initialFigures = Object.fromEntries(githubRepositories.map((repository, index) => [
+            repository,
+            {
+                commits: index + 2,
+                lastActivityAt: `2026-08-${String(index + 1).padStart(2, '0')}T12:00:00Z`,
+            },
+        ]));
+        const changedFigures = Object.fromEntries(githubRepositories.map((repository) => [
+            repository,
+            { commits: 99, lastActivityAt: '2026-09-01T12:00:00Z' },
+        ]));
+        let shouldUseInitialFigures = true;
+        const activityApp = createApp({
+            githubToken: 'server-only-test-token',
+            githubFetch: (...args) => createGitHubFetch(
+                shouldUseInitialFigures ? initialFigures : changedFigures,
+            )(...args),
+        });
+
+        const first = await request(activityApp).get('/api/github-activity');
+        shouldUseInitialFigures = false;
+        const second = await request(activityApp).get('/api/github-activity');
+
+        assert.equal(first.status, 200);
+        assert.equal(first.body.author, 'SuperMo0');
+        assert.equal(first.body.totalCommits, 35);
+        assert.deepEqual(
+            first.body.projects.map(({ repository, commits, lastActivityAt }) => ({
+                repository,
+                commits,
+                lastActivityAt,
+            })),
+            githubRepositories.map((repository, index) => ({
+                repository,
+                commits: index + 2,
+                lastActivityAt: `2026-08-${String(index + 1).padStart(2, '0')}T12:00:00Z`,
+            })),
+        );
+        assert.equal(second.status, 200);
+        assert.deepEqual(second.body, first.body);
+        assert.equal(JSON.stringify(first.body).includes('server-only-test-token'), false);
+    });
+
+    test('returns an unavailable response when GitHub fails with a cold cache', async () => {
+        const activityApp = createApp({
+            githubToken: 'server-only-test-token',
+            githubFetch: async () => new Response(
+                JSON.stringify({ message: 'upstream unavailable' }),
+                { status: 503, headers: { 'content-type': 'application/json' } },
+            ),
+        });
+
+        const response = await request(activityApp).get('/api/github-activity');
+
+        assert.equal(response.status, 503);
+        assert.deepEqual(response.body, { message: 'GitHub activity is temporarily unavailable' });
     });
 });

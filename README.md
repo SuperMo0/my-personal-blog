@@ -26,6 +26,12 @@ The command is safe to rerun. It finds accounts by email, preserves their IDs an
 
 Keep `DEMO_EMAIL` in the deployed application's runtime environment so the one-click demo button can find the viewer account. The password variables are needed only while provisioning and should be removed from the shell afterward.
 
+## Configure GitHub activity
+
+The About page gets authored-commit figures from the server-side `/api/github-activity` route. Set `GITHUB_TOKEN` in the application's runtime environment to a GitHub token that can read the seven public repositories listed on the page. The token is used only by the backend and must never be exposed through a `VITE_` variable or committed to the repository.
+
+Successful GitHub responses are cached in memory for six hours. If GitHub cannot be reached before the cache has been populated, the endpoint reports temporary unavailability and the About page simply omits the activity sentence.
+
 ## Tech Stack
 
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)

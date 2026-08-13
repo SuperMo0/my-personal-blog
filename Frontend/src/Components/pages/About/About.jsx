@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { SiCodeforces } from 'react-icons/si';
 import SocialLink from '../../Social-Link/SocialLink';
 import projects from '../../../data/projects';
+import apiRequest from '../../../utils/Api';
 
 const featuredProjects = projects.filter((project) => project.featured);
 const listedProjects = projects.filter((project) => !project.featured);
@@ -32,7 +33,34 @@ function ProjectLinks({ project }) {
     );
 }
 
-function ProjectDetails({ project }) {
+function formatActivityDate(value) {
+    if (!value) return null;
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return null;
+
+    return new Intl.DateTimeFormat('en', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+    }).format(date);
+}
+
+function ProjectActivity({ activity }) {
+    if (!activity) return null;
+
+    const lastActivity = formatActivityDate(activity.lastActivityAt);
+    const commitLabel = activity.commits === 1 ? 'commit' : 'commits';
+
+    return (
+        <p className="project-activity font-interface text-xs text-(--text-secondary)" aria-hidden="true">
+            {activity.commits.toLocaleString()} authored {commitLabel}
+            {lastActivity && <> · last activity {lastActivity}</>}
+        </p>
+    );
+}
+
+function ProjectDetails({ project, activity }) {
     return (
         <div>
             <h3 className="text-xl font-bold leading-tight">
@@ -50,16 +78,49 @@ function ProjectDetails({ project }) {
             <div className="mt-3">
                 <ProjectLinks project={project} />
             </div>
+            <ProjectActivity activity={activity} />
         </div>
     );
 }
 
 export default function About() {
+    const [githubActivity, setGithubActivity] = useState(null);
+
     useEffect(() => {
         if (window.location.hash === '#social') {
             document.getElementById('social')?.scrollIntoView();
         }
     }, []);
+
+    useEffect(() => {
+        let shouldApplyActivityResult = true;
+
+        async function loadGitHubActivity() {
+            try {
+                const [activity, ok] = await apiRequest('/github-activity');
+                if (
+                    shouldApplyActivityResult
+                    && ok
+                    && Number.isFinite(activity.totalCommits)
+                    && Array.isArray(activity.projects)
+                ) {
+                    setGithubActivity(activity);
+                }
+            } catch {
+                // The figures are an enhancement; the portfolio remains complete without them.
+            }
+        }
+
+        loadGitHubActivity();
+
+        return () => {
+            shouldApplyActivityResult = false;
+        };
+    }, []);
+
+    const activityBySlug = new Map(
+        githubActivity?.projects.map((activity) => [activity.slug, activity]) ?? [],
+    );
 
     return (
         <div className="wrapper max-w-6xl py-16 sm:py-20">
@@ -103,7 +164,7 @@ export default function About() {
                     {featuredProjects.map((project) => (
                         <article
                             key={project.slug}
-                            className="transition-transform duration-300 hover:scale-[1.02]"
+                            className="project-entry relative transition-transform duration-300 hover:scale-[1.02]"
                         >
                             <a
                                 href={project.live}
@@ -120,7 +181,10 @@ export default function About() {
                                 />
                             </a>
                             <div className="mt-5">
-                                <ProjectDetails project={project} />
+                                <ProjectDetails
+                                    project={project}
+                                    activity={activityBySlug.get(project.slug)}
+                                />
                             </div>
                         </article>
                     ))}
@@ -128,11 +192,32 @@ export default function About() {
 
                 <div className="mt-16 max-w-3xl space-y-9 sm:mt-20">
                     {listedProjects.map((project) => (
-                        <article key={project.slug} className="transition-transform duration-300 hover:scale-[1.02]">
-                            <ProjectDetails project={project} />
+                        <article
+                            key={project.slug}
+                            className="project-entry relative transition-transform duration-300 hover:scale-[1.02]"
+                        >
+                            <ProjectDetails
+                                project={project}
+                                activity={activityBySlug.get(project.slug)}
+                            />
                         </article>
                     ))}
                 </div>
+
+                {githubActivity && (
+                    <p className="font-interface mt-16 max-w-3xl text-sm leading-relaxed text-(--text-secondary)">
+                        Across these {githubActivity.projects.length} projects, I’ve authored{' '}
+                        {githubActivity.totalCommits.toLocaleString()} commits, according to{' '}
+                        <a
+                            href="https://github.com/SuperMo0"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-(--text-primary) underline decoration-(--accent) underline-offset-4"
+                        >
+                            GitHub
+                        </a>.
+                    </p>
+                )}
             </section>
 
             <section aria-labelledby="competitive-heading" className="pt-24 sm:pt-28">

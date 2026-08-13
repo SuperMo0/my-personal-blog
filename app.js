@@ -3,20 +3,36 @@ import cors from 'cors';
 import path from 'path';
 import guestRouter from './Routes/Guest-route.js';
 import adminRouter from './Routes/Admin-route.js';
+import createGitHubRouter from './Routes/GitHub-route.js';
+import { createGitHubActivity } from './utils/github-activity.js';
 
-const app = express();
-
-app.use(cors());
-app.use('/api/blogs', guestRouter);
-app.use('/api/admin', adminRouter);
-
-if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
-    const staticPath = path.join(process.cwd(), 'Frontend/dist');
-
-    app.use(express.static(staticPath));
-    app.get('/{*splat}', (req, res) => {
-        res.sendFile(path.join(staticPath, 'index.html'));
+export function createApp({
+    githubToken,
+    githubFetch,
+} = {}) {
+    const app = express();
+    const getGitHubActivity = createGitHubActivity({
+        token: githubToken,
+        fetchImpl: githubFetch,
     });
+
+    app.use(cors());
+    app.use('/api/blogs', guestRouter);
+    app.use('/api/admin', adminRouter);
+    app.use('/api/github-activity', createGitHubRouter(getGitHubActivity));
+
+    if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
+        const staticPath = path.join(process.cwd(), 'Frontend/dist');
+
+        app.use(express.static(staticPath));
+        app.get('/{*splat}', (req, res) => {
+            res.sendFile(path.join(staticPath, 'index.html'));
+        });
+    }
+
+    return app;
 }
+
+const app = createApp();
 
 export default app;
