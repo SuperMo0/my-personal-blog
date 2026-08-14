@@ -11,7 +11,7 @@
     "url": "git+https://github.com/SuperMo0/MyBlog-Deploy.git"
   },
   "license": "ISC",
-  "author": "Mowafak",
+  "author": "Mwafak",
   "type": "module",
   "main": "index.js",
   "scripts": {

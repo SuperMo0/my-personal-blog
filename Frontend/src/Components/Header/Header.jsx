@@ -13,8 +13,8 @@ export default function Header({ handleThemeChange }) {
     return (
         <header className="sticky top-0 z-40 w-full border-b border-(--border-color) bg-(--bg-primary)/90 backdrop-blur-md transition-colors duration-300">
             <div className="wrapper flex h-14 items-center justify-between gap-2 px-3 sm:h-16 sm:px-6 lg:px-8">
-                <NavLink to="/" className="shrink-0 text-xl font-bold tracking-tighter" aria-label="Mowafak Almahaini, home">
-                    <span className="text-(--accent)">Mowafak</span>
+                <NavLink to="/" className="shrink-0 text-xl font-bold tracking-tighter" aria-label="Mwafak Almahaini, home">
+                    <span className="text-(--accent)">Mwafak</span>
                     <span className="hidden sm:inline"> Almahaini</span>
                 </NavLink>
 

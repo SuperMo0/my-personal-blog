@@ -4,7 +4,7 @@ export default function CV() {
     return (
         <div className="wrapper max-w-5xl py-16 sm:py-20">
             <header className="mx-auto max-w-3xl text-center">
-                <h1 className="text-4xl font-bold sm:text-5xl">Mowafak Almahaini</h1>
+                <h1 className="text-4xl font-bold sm:text-5xl">Mwafak Almahaini</h1>
                 <address className="font-interface mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm not-italic text-(--text-secondary) sm:text-base">
                     <span>Cairo, Egypt · Open to relocate</span>
                     <a className="transition-colors hover:text-(--accent)" href="tel:+201006864406">+20 100 686 4406</a>
@@ -35,8 +35,8 @@ export default function CV() {
                     </a>
                 </address>
                 <a
-                    href="/Mowafak-Almahaini-CV.pdf"
-                    download="Mowafak-Almahaini-CV.pdf"
+                    href="/Mwafak-Almahaini-CV.pdf"
+                    download="Mwafak-Almahaini-CV.pdf"
                     className="font-interface mt-8 inline-block font-semibold text-(--accent) transition-colors hover:text-(--accent-hover)"
                 >
                     Download CV as PDF
@@ -45,8 +45,8 @@ export default function CV() {
 
             <div className="mt-12 bg-(--text-secondary)/10 p-2 sm:p-5">
                 <img
-                    src="/images/mowafak-almahaini-cv.webp"
-                    alt="One-page CV for Mowafak Almahaini"
+                    src="/images/mwafak-almahaini-cv.webp"
+                    alt="One-page CV for Mwafak Almahaini"
                     width="1400"
                     height="1979"
                     className="mx-auto h-auto w-full max-w-4xl"

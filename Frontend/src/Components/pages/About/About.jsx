@@ -138,17 +138,17 @@ export default function About() {
                 <div className="flex flex-col items-center gap-10 md:flex-row md:gap-14">
                     <div className="shrink-0">
                         <img
-                            src="/images/mowafak-almahaini.webp"
+                            src="/images/mwafak-almahaini.webp"
                             width="640"
                             height="640"
                             className="h-48 w-48 rounded-full object-cover md:h-72 md:w-72"
-                            alt="Mowafak Almahaini"
+                            alt="Mwafak Almahaini"
                         />
                     </div>
 
                     <div className="w-full max-w-2xl">
                         <h1 id="about-heading" className="text-4xl font-bold leading-tight text-balance sm:text-5xl">
-                            Hi, I’m <span className="text-(--accent)">Mowafak</span>.
+                            Hi, I’m <span className="text-(--accent)">Mwafak</span>.
                         </h1>
                         <p className="mt-6 text-lg leading-relaxed text-pretty text-(--text-secondary)">
                             I built this blog to document my journey in software engineering. I completed{' '}
@@ -245,12 +245,12 @@ export default function About() {
                         href="https://github.com/SuperMo0"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Mowafak Almahaini’s GitHub profile"
+                        aria-label="Mwafak Almahaini’s GitHub profile"
                         className="block overflow-hidden rounded-lg border border-(--border-color) transition-colors duration-300 hover:border-(--accent)"
                     >
                         <img
                             src="/images/github-contributions.webp"
-                            alt="Mowafak Almahaini's GitHub contribution history and activity overview"
+                            alt="Mwafak Almahaini's GitHub contribution history and activity overview"
                             width="775"
                             height="555"
                             className="w-full"
@@ -293,12 +293,12 @@ export default function About() {
                         href="https://codeforces.com/profile/SuperMo"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Mowafak Almahaini’s Codeforces profile"
+                        aria-label="Mwafak Almahaini’s Codeforces profile"
                         className="block overflow-hidden rounded-lg border border-(--border-color) transition-colors duration-300 hover:border-(--accent)"
                     >
                         <img
                             src="/images/codeforces.webp"
-                            alt="Mowafak Almahaini's Codeforces problem-solving history"
+                            alt="Mwafak Almahaini's Codeforces problem-solving history"
                             width="848"
                             height="532"
                             className="w-full"
