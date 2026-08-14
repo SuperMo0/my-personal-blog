@@ -38,7 +38,7 @@ The site is simultaneously the portfolio and one of its exhibits: this blog is a
 - **Reading:** no account required. Comments take a name and content; likes are anonymous and toggleable.
 - **Owner publishing:** sign in → dashboard lists articles with view and like counts → TinyMCE rich-text editor → publish, unpublish, or delete.
 - **Read-only demo:** `/admin/demo-login` signs a visitor in as a `viewer` account with full read access to the dashboard and editor and no write access. *Inferred from the README's provisioning section, the dedicated route, and the login page's "Explore the dashboard safely" copy — treated as a deliberate portfolio exhibit for the primary audience, not an internal tool.*
-- **Deployment:** one Express process serves both the API and the built SPA, at `https://mowafak-blog.onrender.com`.
+- **Deployment:** one Express process serves both the API and the built SPA, at `https://mwafak.dev`.
 
 ## Capabilities and Constraints
 

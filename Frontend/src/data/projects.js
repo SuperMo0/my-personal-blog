@@ -55,7 +55,7 @@ const projects = [
         tagline: 'A full-stack publishing platform with a public reader experience, admin dashboard, and rich-text editor.',
         stack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Tailwind CSS'],
         repo: 'https://github.com/SuperMo0/my-personal-blog',
-        live: 'https://mowafak-blog.onrender.com',
+        live: 'https://mwafak.dev',
         cover: null,
         featured: false,
     },

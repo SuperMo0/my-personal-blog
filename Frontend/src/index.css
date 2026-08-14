@@ -148,7 +148,6 @@
     color: #67e8f9;
   }
 
-  /* Live GitHub figures arrive after first paint; ease them in rather than popping. */
   .project-activity {
     animation: project-activity-in 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }

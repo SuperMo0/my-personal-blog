@@ -3,13 +3,10 @@ import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useNavigate } from 'react-router';
 import api from './../../utils/Api.js';
 
-// Shared by the card and its skeleton so the two cannot drift out of shape.
 const cardShell = 'article-card-custom relative flex flex-col border border-(--border-color) rounded-2xl overflow-hidden';
 const cardBody = 'p-5 flex flex-col grow h-full justify-between';
 const cardFooter = 'flex items-center justify-between pt-4 border-t border-(--border-color)/30 mt-auto';
 
-// Mirrors the card's real anatomy: no cover image, a wrapping title, then a
-// divided footer holding the date and the like pill.
 export function ArticleCardSkeleton() {
     return (
         <article className={cardShell} aria-hidden="true">

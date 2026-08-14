@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Link, Navigate, useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { GoEye } from "react-icons/go";
 import MyEditor from '../../Editor/Editor';
 import api from './../../../utils/Api.js';
@@ -60,10 +60,10 @@ export default function EditorPage({ dark }) {
         const path = id ? `/admin/blogs/${id}` : '/admin/blogs';
         const method = id ? 'put' : 'post';
 
-        const [, ok] = await api(path, { method, body: JSON.stringify(body) });
+        const [result, ok] = await api(path, { method, body: JSON.stringify(body) });
 
         if (ok) setNotification('Article saved successfully!');
-        else setNotification('Failed to save article.');
+        else setNotification(result?.message || 'Failed to save article.');
     }
 
     const getPreviewContent = () => {
@@ -71,7 +71,6 @@ export default function EditorPage({ dark }) {
     };
 
     if (loading) return <div className="text-center py-20">Loading Editor...</div>;
-    if (readOnly && !id) return <Navigate to="/admin/dashboard" replace />;
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -99,8 +98,8 @@ export default function EditorPage({ dark }) {
 
             <div className={`wrapper py-6 ${preview ? 'hidden' : ''}`}>
                 {readOnly && (
-                    <div role="status" className="mb-6 rounded-xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900">
-                        <strong>Read-only demo:</strong> This article is open for reading. Editing and saving are unavailable.
+                    <div role="status" className="mb-6 rounded-xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
+                        Read-only demo — nothing is saved.
                     </div>
                 )}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
@@ -119,10 +118,9 @@ export default function EditorPage({ dark }) {
 
                         <button
                             onClick={handleSave}
-                            disabled={readOnly}
                             className="btn-primary shadow-lg hover:shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {readOnly ? 'Read only' : (id ? 'Update Article' : 'Save Draft')}
+                            {id ? 'Update Article' : 'Save Draft'}
                         </button>
                     </div>
                 </div>
@@ -130,7 +128,6 @@ export default function EditorPage({ dark }) {
                 <input
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    readOnly={readOnly}
                     className="w-full text-4xl font-bold bg-transparent border-none focus:ring-0 placeholder:text-gray-400 mb-6 p-0"
                     type="text"
                     placeholder="Article Title..."
@@ -141,7 +138,6 @@ export default function EditorPage({ dark }) {
                         initialValue={initialContent}
                         handleInit={(evt, editor) => editorRef.current = editor}
                         dark={dark}
-                        readOnly={readOnly}
                     />
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { GoEye, GoHeart, GoTrash, GoPencil, GoGlobe, GoXCircle } from "react-icons/go";
+import { GoHeart, GoTrash, GoPencil, GoGlobe, GoXCircle } from "react-icons/go";
 import api from './../../../utils/Api.js';
 import { useAuth } from '../../../Auth/AuthContext.js';
 
@@ -50,23 +50,17 @@ export default function DashBoard() {
     return (
         <div className="wrapper py-10">
             {readOnly && (
-                <div role="status" className="mb-6 rounded-xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900">
-                    <strong>Read-only demo:</strong> You can open and read articles, but creating, editing, publishing, and deleting are unavailable.
+                <div role="status" className="mb-6 rounded-xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
+                    Read-only demo — nothing is saved.
                 </div>
             )}
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-bold">Your Articles</h1>
-                {readOnly ? (
-                    <button disabled className="btn-primary flex items-center gap-2 opacity-50 cursor-not-allowed" title="Unavailable in the read-only demo">
+                <Link to={'/admin/editor'}>
+                    <button className="btn-primary flex items-center gap-2">
                         <GoPencil /> New Article
                     </button>
-                ) : (
-                    <Link to={'/admin/editor'}>
-                        <button className="btn-primary flex items-center gap-2">
-                            <GoPencil /> New Article
-                        </button>
-                    </Link>
-                )}
+                </Link>
             </div>
 
             <div className="bg-(--bg-card) shadow-md rounded-xl overflow-hidden border border-(--border-color)">
@@ -130,8 +124,8 @@ export default function DashBoard() {
                                             </button>
 
                                             <Link to={`/admin/editor/${a.id}`}>
-                                                <button className="text-blue-600 hover:text-blue-800 p-2 rounded hover:bg-blue-50 transition-colors" title={readOnly ? 'Read article' : 'Edit'}>
-                                                    {readOnly ? <GoEye className="w-5 h-5" /> : <GoPencil className="w-5 h-5" />}
+                                                <button className="text-blue-600 hover:text-blue-800 p-2 rounded hover:bg-blue-50 transition-colors" title="Edit">
+                                                    <GoPencil className="w-5 h-5" />
                                                 </button>
                                             </Link>
                                             <button
