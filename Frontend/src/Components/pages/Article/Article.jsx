@@ -5,6 +5,7 @@ import prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
 import api from './../../../utils/Api.js';
 import Comments from './../../Comments/Comments.jsx';
+import useDocumentMeta from './../../../utils/useDocumentMeta.js';
 
 export default function Article({ preview, previewContent }) {
     const { id } = useParams();
@@ -36,6 +37,10 @@ export default function Article({ preview, previewContent }) {
     const sanitizedHTML = useMemo(
         () => article ? DOMPurify.sanitize(article.content, { ADD_ATTR: ['target'] }) : '',
         [article]
+    );
+
+    useDocumentMeta(
+        !preview && article?.title ? `${article.title} — Mwafak Almahaini` : null,
     );
 
     if (!article && !preview) return <div className="text-center py-20">Loading...</div>;

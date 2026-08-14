@@ -1,6 +1,12 @@
 import React from 'react';
+import useDocumentMeta from '../../../utils/useDocumentMeta';
 
 export default function CV() {
+    useDocumentMeta(
+        'CV — Mwafak Almahaini',
+        'CV of Mwafak Almahaini, full-stack software engineer in Cairo, Egypt.',
+    );
+
     return (
         <div className="wrapper max-w-5xl py-16 sm:py-20">
             <header className="mx-auto max-w-3xl text-center">

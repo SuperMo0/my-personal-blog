@@ -4,6 +4,7 @@ import { SiCodeforces } from 'react-icons/si';
 import SocialLink from '../../Social-Link/SocialLink';
 import projects from '../../../data/projects';
 import apiRequest from '../../../utils/Api';
+import useDocumentMeta from '../../../utils/useDocumentMeta';
 
 const featuredProjects = projects.filter((project) => project.featured);
 const listedProjects = projects.filter((project) => !project.featured);
@@ -94,6 +95,10 @@ function ProjectDetails({ project, activity }) {
 }
 
 export default function About() {
+    useDocumentMeta(
+        'About — Mwafak Almahaini',
+        'Projects, live GitHub activity, and a competitive programming record from Mwafak Almahaini, full-stack software engineer.',
+    );
     const [githubActivity, setGithubActivity] = useState(null);
 
     useEffect(() => {
