@@ -40,6 +40,28 @@
       scroll-behavior: smooth;
     }
   }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--accent) 25%, transparent);
+    color: var(--text-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+@keyframes project-activity-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @layer components {
@@ -126,28 +148,14 @@
     color: #67e8f9;
   }
 
+  /* Live GitHub figures arrive after first paint; ease them in rather than popping. */
   .project-activity {
-    display: none;
+    animation: project-activity-in 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  @media (hover: hover) and (pointer: fine) {
+  @media (prefers-reduced-motion: reduce) {
     .project-activity {
-      display: block;
-      position: absolute;
-      top: calc(100% + 0.375rem);
-      left: 0;
-      width: max-content;
-      max-width: 100%;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-0.25rem);
-      transition: opacity 160ms ease, transform 160ms ease;
-    }
-
-    .project-entry:hover .project-activity,
-    .project-entry:focus-within .project-activity {
-      opacity: 1;
-      transform: translateY(0);
+      animation: none;
     }
   }
 }
