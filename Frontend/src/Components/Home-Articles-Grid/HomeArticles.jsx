@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ArticleCard from '../Article-Card/ArticleCard';
+import ArticleCard, { ArticleCardSkeleton } from '../Article-Card/ArticleCard';
 import api from './../../utils/Api';
 
 export default function HomeArticles() {
@@ -26,15 +26,13 @@ export default function HomeArticles() {
                     ))}
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">  {/*Skeleton*/}
-                    {[1, 2, 3, 4, 5, 6].map((n) => (
-                        <div key={n} className="h-96 bg-(--bg-card) rounded-2xl border border-(--border-color) animate-pulse">
-                            <div className="h-48 bg-gray-300/20 w-full rounded-t-2xl"></div>
-                            <div className="p-6 space-y-3">
-                                <div className="h-6 bg-gray-300/20 w-3/4 rounded"></div>
-                                <div className="h-4 bg-gray-300/20 w-1/2 rounded"></div>
-                            </div>
-                        </div>
+                <div
+                    role="status"
+                    aria-label="Loading articles"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                >
+                    {[1, 2, 3].map((n) => (
+                        <ArticleCardSkeleton key={n} />
                     ))}
                 </div>
             )}

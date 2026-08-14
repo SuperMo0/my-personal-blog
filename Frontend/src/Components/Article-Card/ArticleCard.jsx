@@ -3,6 +3,31 @@ import { GoHeart, GoHeartFill } from "react-icons/go";
 import { useNavigate } from 'react-router';
 import api from './../../utils/Api.js';
 
+// Shared by the card and its skeleton so the two cannot drift out of shape.
+const cardShell = 'article-card-custom relative flex flex-col border border-(--border-color) rounded-2xl overflow-hidden';
+const cardBody = 'p-5 flex flex-col grow h-full justify-between';
+const cardFooter = 'flex items-center justify-between pt-4 border-t border-(--border-color)/30 mt-auto';
+
+// Mirrors the card's real anatomy: no cover image, a wrapping title, then a
+// divided footer holding the date and the like pill.
+export function ArticleCardSkeleton() {
+    return (
+        <article className={cardShell} aria-hidden="true">
+            <div className={`${cardBody} animate-pulse`}>
+                <div className="mb-4 space-y-2">
+                    <div className="h-5 w-full rounded bg-(--text-secondary)" />
+                    <div className="h-5 w-7/12 rounded bg-(--text-secondary)" />
+                </div>
+
+                <div className={cardFooter}>
+                    <div className="h-4 w-16 rounded bg-(--text-secondary)" />
+                    <div className="h-8 w-14 rounded-full bg-(--text-secondary)" />
+                </div>
+            </div>
+        </article>
+    );
+}
+
 export default function ArticleCard({ article }) {
     let navigate = useNavigate();
     const [liked, setLiked] = useState(false);
@@ -29,14 +54,14 @@ export default function ArticleCard({ article }) {
     return (
         <article
             onClick={() => navigate(`/blogs/${article.id}`)}
-            className="article-card-custom group relative flex flex-col border border-(--border-color) rounded-2xl overflow-hidden hover:shadow-xl hover:border-(--accent) transition-all duration-300 cursor-pointer"
+            className={`${cardShell} group hover:shadow-xl hover:border-(--accent) transition-all duration-300 cursor-pointer`}
         >
-            <div className="p-5 flex flex-col grow h-full justify-between">
+            <div className={cardBody}>
                 <h2 className="text-xl font-bold mb-4 line-clamp-3 leading-tight group-hover:text-(--accent) transition-colors">
                     {article.title}
                 </h2>
 
-                <div className="flex items-center justify-between pt-4 border-t border-(--border-color)/30 mt-auto">
+                <div className={cardFooter}>
                     <span className="text-sm font-semibold opacity-70">
                         {new Date(article.created_at).toLocaleDateString()}
                     </span>
