@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as controller from './../Controllers/guest.js'
+import * as controller from './../controllers/guest.js'
 import express from 'express'
 
 

@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
-import Home from './Components/pages/Home/Home';
-import Article from './Components/pages/Article/Article';
-import About from './Components/pages/About/About';
-import CV from './Components/pages/CV/CV';
-import Login from './Components/pages/Login/Login';
-import DashBoard from './Components/pages/DashBoard/DashBoard';
-import EditorPage from './Components/pages/EditorPage/EditorPage';
+import Home from './components/pages/home/Home';
+import Article from './components/pages/article/Article';
+import About from './components/pages/about/About';
+import CV from './components/pages/cv/CV';
+import Login from './components/pages/login/Login';
+import DashBoard from './components/pages/dashboard/DashBoard';
+import EditorPage from './components/pages/editor-page/EditorPage';
 import Guest from './layouts/Guest';
-import RequireGuest from './Auth/RequireGuest';
-import RequireAuth from './Auth/RequireAuth';
+import RequireGuest from './auth/RequireGuest';
+import RequireAuth from './auth/RequireAuth';
 import './App.css'
 
 function App() {

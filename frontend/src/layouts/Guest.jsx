@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../Components/Header/Header';
+import Header from '../components/header/Header';
 import { Outlet } from 'react-router';
-import Footer from '../Components/Footer/Footer';
+import Footer from '../components/footer/Footer';
 
 export default function Guest({ handleThemeChange }) {
     return (

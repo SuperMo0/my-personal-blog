@@ -2,9 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import fs from 'fs/promises';
 import path from 'path';
-import guestRouter from './Routes/Guest-route.js';
-import adminRouter from './Routes/Admin-route.js';
-import createGitHubRouter from './Routes/GitHub-route.js';
+import guestRouter from './routes/Guest-route.js';
+import adminRouter from './routes/Admin-route.js';
+import createGitHubRouter from './routes/GitHub-route.js';
 import { createGitHubActivity } from './utils/github-activity.js';
 import * as guestQueries from './db/guest-queries.js';
 import { articleMeta, injectMeta, renderSitemap, staticMeta } from './utils/seo.js';
@@ -53,7 +53,7 @@ export function createApp({
     });
 
     if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
-        const staticPath = path.join(process.cwd(), 'Frontend/dist');
+        const staticPath = path.join(process.cwd(), 'frontend/dist');
         const indexPath = path.join(staticPath, 'index.html');
 
         app.use(express.static(staticPath));

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaUserCircle } from "react-icons/fa";
 import api from './../../utils/Api.js';
-import NewComment from './../New-Comment/NewComment.jsx';
+import NewComment from './../new-comment/NewComment.jsx';
 
 export default function Comments({ id }) {
     const [comments, setComments] = useState([]);

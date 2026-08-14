@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { GoHeart, GoTrash, GoPencil, GoGlobe, GoXCircle } from "react-icons/go";
 import api from './../../../utils/Api.js';
-import { useAuth } from '../../../Auth/AuthContext.js';
+import { useAuth } from '../../../auth/AuthContext.js';
 
 export default function DashBoard() {
     const { session } = useAuth();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ArticleCard, { ArticleCardSkeleton } from '../Article-Card/ArticleCard';
+import ArticleCard, { ArticleCardSkeleton } from '../article-card/ArticleCard';
 import api from './../../utils/Api';
 
 export default function HomeArticles() {

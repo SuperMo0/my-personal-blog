@@ -1,6 +1,6 @@
 import React from 'react';
-import Hero from '../../Hero/Hero';
-import HomeArticles from '../../Home-Articles-Grid/HomeArticles';
+import Hero from '../../hero/Hero';
+import HomeArticles from '../../home-articles-grid/HomeArticles';
 import useDocumentMeta from '../../../utils/useDocumentMeta';
 
 export default function Home() {

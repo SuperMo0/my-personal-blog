@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 import prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
 import api from './../../../utils/Api.js';
-import Comments from './../../Comments/Comments.jsx';
+import Comments from './../../comments/Comments.jsx';
 import useDocumentMeta from './../../../utils/useDocumentMeta.js';
 
 export default function Article({ preview, previewContent }) {

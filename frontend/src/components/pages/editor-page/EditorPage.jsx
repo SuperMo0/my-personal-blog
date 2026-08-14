@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useParams } from 'react-router';
 import { GoEye } from "react-icons/go";
-import MyEditor from '../../Editor/Editor';
+import MyEditor from '../../editor/Editor';
 import api from './../../../utils/Api.js';
-import Notification from '../../Notification/Notification.jsx';
-import Article from '../Article/Article.jsx';
-import { useAuth } from '../../../Auth/AuthContext.js';
+import Notification from '../../notification/Notification.jsx';
+import Article from '../article/Article.jsx';
+import { useAuth } from '../../../auth/AuthContext.js';
 
 export default function EditorPage({ dark }) {
     const { id } = useParams();

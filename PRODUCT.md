@@ -68,11 +68,11 @@ The site is simultaneously the portfolio and one of its exhibits: this blog is a
 **Real and usable:**
 
 - Published articles, added regularly — design may assume genuine content exists rather than planning around an empty shell.
-- Seven real projects in `Frontend/src/data/projects.js`, each with a repository and most with a live URL. Three are featured with cover images: Movies Club, SYNC Hub (team project at `app.sync.ngo`), and Real-Time Chat.
+- Seven real projects in `frontend/src/data/projects.js`, each with a repository and most with a live URL. Three are featured with cover images: Movies Club, SYNC Hub (team project at `app.sync.ngo`), and Real-Time Chat.
 - Live per-project authored-commit counts and last-activity dates from GitHub.
 - Competitive programming record: Codeforces Specialist after 50+ contests; ECPC 2025 — 129th of 1,734 participants and 4th among 80+ university teams; first place, Nile University Competitive Programming Arena 2025; official ICPC coach for six teams preparing for ICPC 2026.
 - Completed The Odin Project curriculum (20+ full-stack projects); currently on SYNC's software engineering team; works in React, TypeScript, and Python with a focus on practical AI integrations.
-- Images in `Frontend/public/images/`, all `.webp`: profile photo, GitHub contribution graph, Codeforces history, CV render, and three project covers. A demo GIF at `preview/app.gif`.
+- Images in `frontend/public/images/`, all `.webp`: profile photo, GitHub contribution graph, Codeforces history, CV render, and three project covers. A demo GIF at `preview/app.gif`.
 
 **Absent — never fabricate:** testimonials, client or employer logos, press mentions, readership or traffic numbers, awards beyond those listed above, pricing, and availability claims.
 

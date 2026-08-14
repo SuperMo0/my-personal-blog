@@ -1,7 +1,7 @@
 import { Router } from "express";
 import express from 'express';
-import * as auth from './../Controllers/auth.js'
-import * as controller from './../Controllers/admin.js'
+import * as auth from './../controllers/auth.js'
+import * as controller from './../controllers/admin.js'
 import * as validate from './../utils/validate.js'
 
 

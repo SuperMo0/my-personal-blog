@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { SiCodeforces } from 'react-icons/si';
-import SocialLink from '../../Social-Link/SocialLink';
+import SocialLink from '../../social-link/SocialLink';
 import projects from '../../../data/projects';
 import apiRequest from '../../../utils/Api';
 import useDocumentMeta from '../../../utils/useDocumentMeta';

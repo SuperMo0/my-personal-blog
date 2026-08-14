@@ -15,8 +15,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm install --prefix Frontend",
-    "build": "npm run build --prefix Frontend",
+    "postinstall": "npm install --prefix frontend",
+    "build": "npm run build --prefix frontend",
     "provision:accounts": "node scripts/provision-accounts.js",
     "test": "node --experimental-test-module-mocks --test",
     "start": "NODE_ENV=production node index.js",
