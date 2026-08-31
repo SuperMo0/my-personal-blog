@@ -46,8 +46,8 @@ const projects = [
         stack: ['HTML', 'CSS', 'JavaScript'],
         repo: 'https://github.com/SuperMo0/ai-engineering-curriculum',
         live: 'https://supermo0.github.io/ai-engineering-curriculum/',
-        cover: null,
-        featured: false,
+        cover: '/images/ai-engineering-curriculum.webp',
+        featured: true,
     },
     {
         slug: 'this-blog',
@@ -56,8 +56,10 @@ const projects = [
         stack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Tailwind CSS'],
         repo: 'https://github.com/SuperMo0/my-personal-blog',
         live: 'https://mwafak.dev',
-        cover: null,
-        featured: false,
+        cover: '/images/blog-image.webp',
+        coverWidth: 1000,
+        coverHeight: 603,
+        featured: true,
     },
     {
         slug: 'multi-model-ai-assistant',

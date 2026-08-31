@@ -122,7 +122,6 @@ export default function About() {
                     setGithubActivity(activity);
                 }
             } catch {
-                // The figures are an enhancement; the portfolio remains complete without them.
             }
         }
 
@@ -156,14 +155,16 @@ export default function About() {
                             Hi, I’m <span className="text-(--accent)">Mwafak</span>.
                         </h1>
                         <p className="mt-6 text-lg leading-relaxed text-pretty text-(--text-secondary)">
-                            I built this blog to document my journey in software engineering. I completed{' '}
-                            <span className="font-semibold text-(--text-primary)">The Odin Project</span> curriculum,
-                            where I created more than 20 full-stack projects. I recently joined{' '}
-                            <span className="font-semibold text-(--text-primary)">SYNC</span>, and I’m currently working
-                            with its software engineering team.
+                            I built this blog to document my journey in software engineering. I started my full-stack journey with{' '}
+                            <a href="https://www.theodinproject.com/"
+                                className="font-semibold text-(--text-primary)">The Odin Project</a> curriculum
+                            . I recently joined{' '}
+                            <a href="https://www.linkedin.com/company/sync-sv/posts/?feedView=all"
+                                className="font-semibold text-(--text-primary)">SYNC</a>, and I’m currently working
+                            with its software engineering team on an AI powered recruiting platform.
                         </p>
                         <p className="mt-4 text-lg leading-relaxed text-pretty text-(--text-secondary)">
-                            I work with React, TypeScript, and Python, with a focus on practical AI integrations.
+                            I work with React, TypeScript, Node.js, and Python, with a focus on practical AI integrations.
                         </p>
                         <p className="mt-4 text-lg leading-relaxed text-pretty text-(--text-secondary)">
                             I love problem-solving! I reached{' '}
@@ -231,7 +232,7 @@ export default function About() {
                 <div className="mx-auto mt-16 max-w-4xl">
                     {githubActivity && (
                         <p className="project-activity font-interface mb-6 max-w-3xl leading-relaxed text-(--text-secondary) tabular-nums">
-                            Across these {githubActivity.projects.length} projects, I’ve authored{' '}
+                            Across these {githubActivity.projects.length} projects and other project, I’ve authored{' '}
                             <span className="font-semibold text-(--text-primary)">
                                 {githubActivity.totalCommits.toLocaleString()}
                             </span>{' '}
