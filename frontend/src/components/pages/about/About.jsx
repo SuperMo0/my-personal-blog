@@ -232,7 +232,7 @@ export default function About() {
                 <div className="mx-auto mt-16 max-w-4xl">
                     {githubActivity && (
                         <p className="project-activity font-interface mb-6 max-w-3xl leading-relaxed text-(--text-secondary) tabular-nums">
-                            Across these {githubActivity.projects.length} projects and other project, I’ve authored{' '}
+                            Across these {githubActivity.projects.length} projects and other projects, I’ve authored{' '}
                             <span className="font-semibold text-(--text-primary)">
                                 +2000
                             </span>{' '}
