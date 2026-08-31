@@ -234,7 +234,7 @@ export default function About() {
                         <p className="project-activity font-interface mb-6 max-w-3xl leading-relaxed text-(--text-secondary) tabular-nums">
                             Across these {githubActivity.projects.length} projects and other project, I’ve authored{' '}
                             <span className="font-semibold text-(--text-primary)">
-                                {githubActivity.totalCommits.toLocaleString()}
+                                +2000
                             </span>{' '}
                             commits, according to{' '}
                             <a
