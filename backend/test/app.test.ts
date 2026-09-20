@@ -791,6 +791,42 @@ describe('Rate limiting on public write endpoints', () => {
         assert.equal(third.status, 429);
         assert.deepEqual(third.body, { message: 'Too many requests, please try again later.' });
     });
+
+    test('throttles repeated login attempts from the same visitor', async () => {
+        const limitedApp = createApp({
+            loginRateLimit: { windowMs: 60_000, limit: 2 },
+        });
+
+        const first = await request(limitedApp)
+            .post('/api/admin/login')
+            .send({ email: 'owner@example.com', password: 'wrong' });
+        const second = await request(limitedApp)
+            .post('/api/admin/login')
+            .send({ email: 'owner@example.com', password: 'wrong' });
+        const third = await request(limitedApp)
+            .post('/api/admin/login')
+            .send({ email: 'owner@example.com', password: 'wrong' });
+
+        assert.equal(first.status, 401);
+        assert.equal(second.status, 401);
+        assert.equal(third.status, 429);
+        assert.deepEqual(third.body, { message: 'Too many requests, please try again later.' });
+    });
+
+    test('throttles repeated demo-login attempts from the same visitor', async () => {
+        const limitedApp = createApp({
+            demoLoginRateLimit: { windowMs: 60_000, limit: 2 },
+        });
+
+        const first = await request(limitedApp).post('/api/admin/demo-login');
+        const second = await request(limitedApp).post('/api/admin/demo-login');
+        const third = await request(limitedApp).post('/api/admin/demo-login');
+
+        assert.equal(first.status, 200);
+        assert.equal(second.status, 200);
+        assert.equal(third.status, 429);
+        assert.deepEqual(third.body, { message: 'Too many requests, please try again later.' });
+    });
 });
 
 describe('Request validation', () => {

@@ -6,7 +6,7 @@ import type { Options as RateLimitOptions } from 'express-rate-limit';
 import helmet from 'helmet';
 import * as guestQueries from './db/guest-queries.ts';
 import { errorHandler } from './middleware/errorHandler.ts';
-import adminRouter from './routes/Admin-route.ts';
+import createAdminRouter from './routes/Admin-route.ts';
 import contributionsRouter from './routes/Contributions-route.ts';
 import createGitHubRouter from './routes/GitHub-route.ts';
 import createGuestRouter from './routes/Guest-route.ts';
@@ -37,6 +37,8 @@ export interface CreateAppOptions {
     githubRequestTimeoutMs?: number;
     commentRateLimit?: Partial<RateLimitOptions>;
     likeRateLimit?: Partial<RateLimitOptions>;
+    loginRateLimit?: Partial<RateLimitOptions>;
+    demoLoginRateLimit?: Partial<RateLimitOptions>;
 }
 
 export function createApp({
@@ -45,6 +47,8 @@ export function createApp({
     githubRequestTimeoutMs,
     commentRateLimit,
     likeRateLimit,
+    loginRateLimit,
+    demoLoginRateLimit,
 }: CreateAppOptions = {}) {
     const app = express();
     const getGitHubActivity = createGitHubActivity({
@@ -57,10 +61,26 @@ export function createApp({
         app.set('trust proxy', 1);
     }
 
-    app.use(helmet({ contentSecurityPolicy: false }));
+    app.use(
+        helmet({
+            contentSecurityPolicy: {
+                directives: {
+                    defaultSrc: ["'self'"],
+                    scriptSrc: ["'self'"],
+                    styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+                    fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+                    imgSrc: ["'self'", 'https:', 'data:'],
+                    connectSrc: ["'self'", 'https://codeforces.com'],
+                    objectSrc: ["'none'"],
+                    baseUri: ["'self'"],
+                    frameAncestors: ["'self'"],
+                },
+            },
+        }),
+    );
     app.use(cors({ origin: ALLOWED_ORIGINS }));
     app.use('/api/blogs', createGuestRouter({ commentRateLimit, likeRateLimit }));
-    app.use('/api/admin', adminRouter);
+    app.use('/api/admin', createAdminRouter({ loginRateLimit, demoLoginRateLimit }));
     app.use('/api/open-source-contributions', contributionsRouter);
     app.use('/api/github-activity', createGitHubRouter(getGitHubActivity));
 

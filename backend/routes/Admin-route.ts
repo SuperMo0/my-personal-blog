@@ -1,64 +1,82 @@
 import express, { Router } from 'express';
+import type { Options as RateLimitOptions } from 'express-rate-limit';
 import * as controller from '../controllers/admin.ts';
 import * as authController from '../controllers/auth.ts';
 import * as contributions from '../controllers/contributions.ts';
 import { authorizeAccess, requireAdmin } from '../middleware/auth.ts';
+import { createRateLimiter } from '../middleware/rateLimit.ts';
 import { validateBody, validateParams } from '../middleware/validate.ts';
 import { loginBodySchema } from '../schemas/auth.ts';
 import { newBlogBodySchema, updateBlogBodySchema } from '../schemas/blog.ts';
 import { idParamSchema } from '../schemas/common.ts';
 import { newContributionBodySchema, updateContributionBodySchema } from '../schemas/contribution.ts';
 
-const router = Router();
+const DEFAULT_LOGIN_RATE_LIMIT: Partial<RateLimitOptions> = { windowMs: 60 * 1000, limit: 50 };
 
-router.post('/login', express.json(), validateBody(loginBodySchema), authController.authenticateAdmin);
-router.post('/demo-login', authController.authenticateDemo);
+export default function createAdminRouter({
+    loginRateLimit = DEFAULT_LOGIN_RATE_LIMIT,
+    demoLoginRateLimit = DEFAULT_LOGIN_RATE_LIMIT,
+}: {
+    loginRateLimit?: Partial<RateLimitOptions>;
+    demoLoginRateLimit?: Partial<RateLimitOptions>;
+} = {}) {
+    const router = Router();
 
-router.use(authorizeAccess);
+    router.post(
+        '/login',
+        createRateLimiter(loginRateLimit),
+        express.json(),
+        validateBody(loginBodySchema),
+        authController.authenticateAdmin,
+    );
+    router.post('/demo-login', createRateLimiter(demoLoginRateLimit), authController.authenticateDemo);
 
-router.get('/blogs', controller.handleGetAllBlogs);
+    router.use(authorizeAccess);
 
-router.get('/blogs/:id', validateParams(idParamSchema), controller.handleGetBlog);
+    router.get('/blogs', controller.handleGetAllBlogs);
 
-router.get('/blogs/:id/comments', validateParams(idParamSchema), controller.handleGetBlogComments);
+    router.get('/blogs/:id', validateParams(idParamSchema), controller.handleGetBlog);
 
-router.post('/blogs', requireAdmin, express.json(), validateBody(newBlogBodySchema), controller.handleNewBlog);
+    router.get('/blogs/:id/comments', validateParams(idParamSchema), controller.handleGetBlogComments);
 
-router.put(
-    '/blogs/:id',
-    requireAdmin,
-    validateParams(idParamSchema),
-    express.json(),
-    validateBody(updateBlogBodySchema),
-    controller.handleUpdateBlog,
-);
+    router.post('/blogs', requireAdmin, express.json(), validateBody(newBlogBodySchema), controller.handleNewBlog);
 
-router.delete('/blogs/:id', requireAdmin, validateParams(idParamSchema), controller.handleDeleteBlog);
+    router.put(
+        '/blogs/:id',
+        requireAdmin,
+        validateParams(idParamSchema),
+        express.json(),
+        validateBody(updateBlogBodySchema),
+        controller.handleUpdateBlog,
+    );
 
-router.get('/contributions', contributions.handleGetAllContributions);
+    router.delete('/blogs/:id', requireAdmin, validateParams(idParamSchema), controller.handleDeleteBlog);
 
-router.post(
-    '/contributions',
-    requireAdmin,
-    express.json(),
-    validateBody(newContributionBodySchema),
-    contributions.handleNewContribution,
-);
+    router.get('/contributions', contributions.handleGetAllContributions);
 
-router.put(
-    '/contributions/:id',
-    requireAdmin,
-    validateParams(idParamSchema),
-    express.json(),
-    validateBody(updateContributionBodySchema),
-    contributions.handleUpdateContribution,
-);
+    router.post(
+        '/contributions',
+        requireAdmin,
+        express.json(),
+        validateBody(newContributionBodySchema),
+        contributions.handleNewContribution,
+    );
 
-router.delete(
-    '/contributions/:id',
-    requireAdmin,
-    validateParams(idParamSchema),
-    contributions.handleDeleteContribution,
-);
+    router.put(
+        '/contributions/:id',
+        requireAdmin,
+        validateParams(idParamSchema),
+        express.json(),
+        validateBody(updateContributionBodySchema),
+        contributions.handleUpdateContribution,
+    );
 
-export default router;
+    router.delete(
+        '/contributions/:id',
+        requireAdmin,
+        validateParams(idParamSchema),
+        contributions.handleDeleteContribution,
+    );
+
+    return router;
+}
