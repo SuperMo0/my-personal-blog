@@ -3,158 +3,243 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-body: "Merriweather", serif;
-  --font-interface: "Inter", sans-serif;
+    --font-display: "Chakra Petch", "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    --font-body: "Merriweather", serif;
 }
 
 @layer base {
-  :root {
-    /* Light Theme (Default) */
-    --bg-primary: #f8fafc;
-    --bg-card: #ffffff;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --accent: #ff4b2b;
-    --accent-hover: #e0381a;
-    --border-color: #e2e8f0;
-  }
+    :root {
+        /* Light — a recruiter skimming this on a laptop in office light */
+        --canvas: #f6f8fa;
+        --surface: #ffffff;
+        --surface-raised: #ffffff;
+        --border-subtle: #d0d7de;
+        --border-strong: #afb8c1;
+        --text-primary: #1b1f24;
+        --text-secondary: #59636e;
+        --text-tertiary: #6e7781;
 
-  /* Dark Theme Data Attribute Selector */
-  [data-dark="true"] {
-    --bg-primary: #222224;
-    --bg-card: #1e293b;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --accent: #ff4b2b;
-    --accent-hover: #ff6b4f;
-    --border-color: #334155;
-  }
+        --accent: #0969da;
+        --accent-strong: #0550ae;
+        --accent-soft: color-mix(in oklab, var(--accent) 14%, transparent);
 
-  body {
-    font-family: var(--font-body);
-    @apply bg-(--bg-primary) text-(--text-primary) transition-colors duration-300 min-h-screen;
-  }
+        --data-0: #ebedf0;
+        --data-1: #9be9a8;
+        --data-2: #40c463;
+        --data-3: #30a14e;
+        --data-4: #216e39;
 
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
+        --ok: #1a7f37;
+        --fail: #cf222e;
+
+        --shadow-color: 220 30% 20%;
+
+        /* Legacy aliases: admin surfaces (dashboard, editor, login) still reference these */
+        --bg-primary: var(--canvas);
+        --bg-card: var(--surface);
+        --accent-hover: var(--accent-strong);
+        --border-color: var(--border-subtle);
     }
-  }
 
-  ::selection {
-    background-color: color-mix(in oklab, var(--accent) 25%, transparent);
-    color: var(--text-primary);
-  }
+    /* Dark — the same person, late, scrolling a phone before bed */
+    [data-dark="true"] {
+        --canvas: #05070a;
+        --surface: #0d1117;
+        --surface-raised: #141a23;
+        --border-subtle: #212933;
+        --border-strong: #2f3947;
+        --text-primary: #eef1f5;
+        --text-secondary: #8b96a5;
+        --text-tertiary: #5b6472;
 
-  :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  }
+        --accent: #4493f8;
+        --accent-strong: #71b0ff;
+        --accent-soft: color-mix(in oklab, var(--accent) 16%, transparent);
+
+        --data-0: #161b22;
+        --data-1: #0e4429;
+        --data-2: #006d32;
+        --data-3: #26a641;
+        --data-4: #39d353;
+
+        --ok: #3fb950;
+        --fail: #f85149;
+
+        --shadow-color: 220 60% 2%;
+
+        --bg-primary: var(--canvas);
+        --bg-card: var(--surface);
+        --accent-hover: var(--accent-strong);
+        --border-color: var(--border-subtle);
+    }
+
+    body {
+        font-family: var(--font-body);
+        @apply bg-(--canvas) text-(--text-primary) transition-colors duration-300 min-h-screen;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .font-display {
+        font-family: var(--font-display);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
+    }
+
+    ::selection {
+        background-color: color-mix(in oklab, var(--accent) 30%, transparent);
+        color: var(--text-primary);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--canvas);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--border-strong);
+        border-radius: 999px;
+        border: 3px solid var(--canvas);
+    }
+
+    html {
+        scrollbar-color: var(--border-strong) var(--canvas);
+    }
+
+    * {
+        caret-color: var(--accent);
+    }
+}
+
+@keyframes cell-in {
+    from {
+        opacity: 0;
+        transform: scale(0.4);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @keyframes project-activity-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.25rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
+    from {
+        opacity: 0;
+        transform: translateY(0.25rem);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 @layer components {
-  .wrapper {
-    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative;
-  }
-
-  .btn-primary {
-    @apply px-6 py-2.5 bg-(--accent) text-white font-medium rounded-lg 
-           hover:bg-(--accent-hover) active:scale-95 transition-all duration-200 
-           shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-
-  .input-field {
-    @apply w-full px-4 py-3 rounded-lg border border-(--border-color) 
-           bg-(--bg-card) text-(--text-primary)
-           focus:outline-none focus:ring-2 focus:ring-(--accent) focus:border-transparent
-           transition-all duration-200 placeholder:text-(--text-secondary);
-  }
-
-  .article-card-custom {
-    --s: 84px;
-    --c1: #f2f2f2;
-    --c2: #cdcbcc;
-    --c3: #999999;
-    --_g: 0 120deg, #0000 0;
-
-    background:
-      conic-gradient(at calc(250% / 3) calc(100% / 3), var(--c3) var(--_g)),
-      conic-gradient(
-        from -120deg at calc(50% / 3) calc(100% / 3),
-        var(--c2) var(--_g)
-      ),
-      conic-gradient(
-        from 120deg at calc(100% / 3) calc(250% / 3),
-        var(--c1) var(--_g)
-      ),
-      conic-gradient(
-        from 120deg at calc(200% / 3) calc(250% / 3),
-        var(--c1) var(--_g)
-      ),
-      conic-gradient(
-        from -180deg at calc(100% / 3) 50%,
-        var(--c2) 60deg,
-        var(--c1) var(--_g)
-      ),
-      conic-gradient(
-        from 60deg at calc(200% / 3) 50%,
-        var(--c1) 60deg,
-        var(--c3) var(--_g)
-      ),
-      conic-gradient(
-        from -60deg at 50% calc(100% / 3),
-        var(--c1) 120deg,
-        var(--c2) 0 240deg,
-        var(--c3) 0
-      );
-    background-size: calc(var(--s) * sqrt(3)) var(--s);
-  }
-
-  [data-dark="true"] .article-card-custom {
-    --s: 166px;
-    --c1: #1d1d1d;
-    --c2: #4e4f51;
-    --c3: #3c3c3c;
-
-    background:
-      repeating-conic-gradient(from 30deg, #0000 0 120deg, var(--c3) 0 50%)
-        calc(var(--s) / 2) calc(var(--s) * tan(30deg) / 2),
-      repeating-conic-gradient(
-        from 30deg,
-        var(--c1) 0 60deg,
-        var(--c2) 0 120deg,
-        var(--c3) 0 50%
-      );
-    background-size: var(--s) calc(var(--s) * tan(30deg));
-  }
-
-  .codeforces-rank {
-    color: #087d91;
-  }
-
-  [data-dark="true"] .codeforces-rank {
-    color: #67e8f9;
-  }
-
-  .project-activity {
-    animation: project-activity-in 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .project-activity {
-      animation: none;
+    .wrapper {
+        @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative;
     }
-  }
+
+    .font-mono-ui {
+        font-family: var(--font-mono);
+        font-feature-settings:
+            "tnum" 1,
+            "zero" 1;
+    }
+
+    .surface-panel {
+        @apply bg-(--surface) border border-(--border-subtle) rounded-xl;
+        box-shadow: 0 1px 0 hsl(var(--shadow-color) / 0.04);
+    }
+
+    .btn-primary {
+        font-family: var(--font-mono);
+        @apply px-5 py-2.5 bg-(--accent) text-(--canvas) text-sm font-semibold rounded-md hover:bg-(--accent-strong) active:scale-[0.97] transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    .btn-ghost {
+        font-family: var(--font-mono);
+        @apply px-5 py-2.5 border border-(--border-strong) text-(--text-primary) text-sm font-semibold rounded-md hover:border-(--accent) hover:text-(--accent) active:scale-[0.97] transition-all duration-150;
+    }
+
+    .input-field {
+        @apply w-full px-4 py-3 rounded-lg border border-(--border-subtle) bg-(--surface) text-(--text-primary) focus:outline-none focus:ring-2 focus:ring-(--accent) focus:border-transparent transition-all duration-200 placeholder:text-(--text-tertiary);
+    }
+
+    .odin-link {
+        color: var(--text-primary);
+        font-weight: 600;
+        text-decoration: underline;
+        text-decoration-color: var(--border-strong);
+        text-underline-offset: 3px;
+    }
+
+    .odin-link:hover {
+        color: var(--accent);
+        text-decoration-color: var(--accent);
+    }
+
+    .sync-link {
+        color: #0e7490;
+        font-weight: 600;
+    }
+
+    [data-dark="true"] .sync-link {
+        color: #67e8f9;
+    }
+
+    .heatmap-cell {
+        animation: cell-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .heatmap-cell {
+            animation: none;
+        }
+    }
+
+    .codeforces-rank {
+        color: #03a89e;
+    }
+
+    [data-dark="true"] .codeforces-rank {
+        color: #2dd9cd;
+    }
+
+    a.codeforces-rank {
+        text-decoration: underline;
+        text-decoration-color: currentColor;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+        opacity: 0.92;
+    }
+
+    a.codeforces-rank:hover {
+        opacity: 1;
+    }
+
+    .project-activity {
+        animation: project-activity-in 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .project-activity {
+            animation: none;
+        }
+    }
 }

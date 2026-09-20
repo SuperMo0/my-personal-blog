@@ -12,13 +12,82 @@ export const GITHUB_PROJECTS = [
 
 const DEFAULT_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 const DEFAULT_REQUEST_TIMEOUT_MS = 10 * 1000;
+const GITHUB_GRAPHQL_URL = 'https://api.github.com/graphql';
+const PROJECT_CONCURRENCY = 3;
+
+async function mapWithConcurrency(items, limit, mapper) {
+    const results = new Array(items.length);
+    let nextIndex = 0;
+
+    async function worker() {
+        while (nextIndex < items.length) {
+            const index = nextIndex;
+            nextIndex += 1;
+            results[index] = await mapper(items[index], index);
+        }
+    }
+
+    await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+    return results;
+}
+
+const CONTRIBUTION_CALENDAR_QUERY = `
+    query($login: String!) {
+        user(login: $login) {
+            contributionsCollection {
+                contributionCalendar {
+                    totalContributions
+                    weeks {
+                        contributionDays {
+                            date
+                            contributionCount
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
+
+async function fetchContributionCalendar({ author, token, fetchImpl, requestTimeoutMs }) {
+    const signal = AbortSignal.timeout(requestTimeoutMs);
+    const response = await fetchImpl(GITHUB_GRAPHQL_URL, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/vnd.github+json',
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'User-Agent': 'SuperMo0-personal-blog',
+        },
+        body: JSON.stringify({ query: CONTRIBUTION_CALENDAR_QUERY, variables: { login: author } }),
+        signal,
+    });
+
+    if (!response.ok) {
+        throw new Error('GitHub contribution calendar request failed');
+    }
+
+    const payload = await response.json();
+    const calendar = payload?.data?.user?.contributionsCollection?.contributionCalendar;
+    if (!calendar || !Array.isArray(calendar.weeks)) {
+        throw new Error('GitHub returned an unexpected contribution calendar response');
+    }
+
+    return {
+        totalContributions: calendar.totalContributions,
+        days: calendar.weeks.flatMap((week) =>
+            week.contributionDays.map((day) => ({
+                date: day.date,
+                count: day.contributionCount,
+            })),
+        ),
+    };
+}
 
 function lastPageFrom(linkHeader) {
     if (!linkHeader) return null;
 
-    const lastLink = linkHeader
-        .split(',')
-        .find((link) => /rel="last"/.test(link));
+    const lastLink = linkHeader.split(',').find((link) => /rel="last"/.test(link));
 
     if (!lastLink) return null;
 
@@ -49,10 +118,7 @@ async function projectActivity({ repository, author, token, fetchImpl, requestTi
         throw new Error(`GitHub activity request failed for ${repository}`);
     }
 
-    const [commits, repositoryDetails] = await Promise.all([
-        commitsResponse.json(),
-        repositoryResponse.json(),
-    ]);
+    const [commits, repositoryDetails] = await Promise.all([commitsResponse.json(), repositoryResponse.json()]);
     if (!Array.isArray(commits) || typeof repositoryDetails !== 'object' || !repositoryDetails) {
         throw new Error(`GitHub returned an unexpected response for ${repository}`);
     }
@@ -63,6 +129,7 @@ async function projectActivity({ repository, author, token, fetchImpl, requestTi
     return {
         commits: commitCount,
         lastActivityAt: repositoryDetails.pushed_at ?? null,
+        stars: repositoryDetails.stargazers_count ?? 0,
     };
 }
 
@@ -79,22 +146,26 @@ export function createGitHubActivity({
             throw new Error('GITHUB_TOKEN is not configured');
         }
 
-        const projects = await Promise.all(GITHUB_PROJECTS.map(async ({ slug, repository }) => ({
-            slug,
-            repository,
-            ...await projectActivity({
+        const [projects, contributionCalendar] = await Promise.all([
+            mapWithConcurrency(GITHUB_PROJECTS, PROJECT_CONCURRENCY, async ({ slug, repository }) => ({
+                slug,
                 repository,
-                author: GITHUB_AUTHOR,
-                token,
-                fetchImpl,
-                requestTimeoutMs,
-            }),
-        })));
+                ...(await projectActivity({
+                    repository,
+                    author: GITHUB_AUTHOR,
+                    token,
+                    fetchImpl,
+                    requestTimeoutMs,
+                })),
+            })),
+            fetchContributionCalendar({ author: GITHUB_AUTHOR, token, fetchImpl, requestTimeoutMs }).catch(() => null),
+        ]);
 
         return {
             author: GITHUB_AUTHOR,
             totalCommits: projects.reduce((total, project) => total + project.commits, 0),
             projects,
+            contributionCalendar,
             fetchedAt: new Date().toISOString(),
         };
     }

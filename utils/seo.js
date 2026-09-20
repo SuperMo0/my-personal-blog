@@ -1,7 +1,8 @@
 export const SITE_URL = 'https://mwafak.dev';
 export const SITE_NAME = 'Mwafak Almahaini';
 
-const DEFAULT_DESCRIPTION = 'Mwafak Almahaini is a full-stack software engineer in Cairo. Articles on code, algorithms, and the practice of building software.';
+const DEFAULT_DESCRIPTION =
+    'Mwafak Almahaini is a full-stack software engineer in Dubai. Articles on code, algorithms, and the practice of building software.';
 const DEFAULT_IMAGE = `${SITE_URL}/images/mwafak-almahaini.webp`;
 
 const STATIC_PAGES = {
@@ -11,24 +12,24 @@ const STATIC_PAGES = {
     },
     '/about': {
         title: `About — ${SITE_NAME}`,
-        description: 'Projects, live GitHub activity, and a competitive programming record from Mwafak Almahaini, full-stack software engineer.',
+        description:
+            'Projects, live GitHub activity, and a competitive programming record from Mwafak Almahaini, full-stack software engineer.',
     },
     '/cv': {
         title: `CV — ${SITE_NAME}`,
-        description: 'CV of Mwafak Almahaini, full-stack software engineer in Cairo, Egypt.',
+        description: 'CV of Mwafak Almahaini, full-stack software engineer in Dubai, UAE.',
     },
 };
 
 function escapeHtml(value) {
-    return String(value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+    return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function summarise(html, limit = 160) {
-    const text = String(html ?? '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    const text = String(html ?? '')
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
     if (text.length <= limit) return text;
     return `${text.slice(0, limit - 1).replace(/\s+\S*$/, '')}…`;
 }
@@ -75,7 +76,10 @@ export function renderTags(meta) {
 }
 
 export function injectMeta(html, meta) {
-    return html.replace(/<!--seo:start-->[\s\S]*?<!--seo:end-->/, `<!--seo:start-->\n  ${renderTags(meta)}\n  <!--seo:end-->`);
+    return html.replace(
+        /<!--seo:start-->[\s\S]*?<!--seo:end-->/,
+        `<!--seo:start-->\n  ${renderTags(meta)}\n  <!--seo:end-->`,
+    );
 }
 
 export function renderSitemap(blogs) {
@@ -90,13 +94,19 @@ export function renderSitemap(blogs) {
         })),
     ];
 
-    const urls = entries.map(({ loc, lastmod, priority }) => [
-        '  <url>',
-        `    <loc>${loc}</loc>`,
-        lastmod ? `    <lastmod>${lastmod}</lastmod>` : null,
-        `    <priority>${priority}</priority>`,
-        '  </url>',
-    ].filter(Boolean).join('\n')).join('\n');
+    const urls = entries
+        .map(({ loc, lastmod, priority }) =>
+            [
+                '  <url>',
+                `    <loc>${loc}</loc>`,
+                lastmod ? `    <lastmod>${lastmod}</lastmod>` : null,
+                `    <priority>${priority}</priority>`,
+                '  </url>',
+            ]
+                .filter(Boolean)
+                .join('\n'),
+        )
+        .join('\n');
 
     return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
