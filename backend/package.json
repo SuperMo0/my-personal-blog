@@ -1,0 +1,48 @@
+{
+  "name": "my-blog-api",
+  "version": "0.0.1",
+  "description": "My personal Blog API to share thoughts and Knowledge",
+  "homepage": "https://github.com/SuperMo0/MyBlog-Deploy#readme",
+  "bugs": {
+    "url": "https://github.com/SuperMo0/MyBlog-Deploy/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperMo0/MyBlog-Deploy.git"
+  },
+  "license": "ISC",
+  "author": "Mwafak",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "provision:accounts": "node scripts/provision-accounts.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-test-module-mocks --test \"test/**/*.test.ts\"",
+    "start": "NODE_ENV=production node index.ts",
+    "dev": "NODE_ENV=development node --watch index.ts"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.16.3",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^26.6.2",
+    "@types/pg": "^8.23.1",
+    "@types/supertest": "^7.2.1",
+    "pg-mem": "^3.0.5",
+    "supertest": "^7.1.4",
+    "typescript": "^7.0.2"
+  }
+}
