@@ -11,27 +11,39 @@ import Home from './components/pages/home/Home';
 import Login from './components/pages/login/Login';
 import Guest from './layouts/Guest';
 
+function getStoredTheme(): 'dark' | 'light' | null {
+    const stored = localStorage.getItem('theme');
+    return stored === 'dark' || stored === 'light' ? stored : null;
+}
+
 function App() {
     const [dark, setDark] = useState(() => {
-        const stored = localStorage.getItem('theme');
+        const stored = getStoredTheme();
         if (stored) return stored === 'dark';
         return window.matchMedia('(prefers-color-scheme: dark)').matches;
     });
 
     useEffect(() => {
-        if (dark) {
-            document.documentElement.setAttribute('data-dark', 'true');
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.setAttribute('data-dark', 'false');
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
+        document.documentElement.setAttribute('data-dark', dark ? 'true' : 'false');
+        document.documentElement.classList.toggle('dark', dark);
     }, [dark]);
 
+    // Follow the OS theme live, but only while the visitor hasn't picked one themselves.
+    useEffect(() => {
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+        function handleSystemChange(event: MediaQueryListEvent) {
+            if (!getStoredTheme()) setDark(event.matches);
+        }
+        media.addEventListener('change', handleSystemChange);
+        return () => media.removeEventListener('change', handleSystemChange);
+    }, []);
+
     function handleThemeChange() {
-        setDark(!dark);
+        setDark((prev) => {
+            const next = !prev;
+            localStorage.setItem('theme', next ? 'dark' : 'light');
+            return next;
+        });
     }
 
     return (

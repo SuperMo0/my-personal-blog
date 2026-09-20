@@ -6,7 +6,10 @@ export default function createGitHubRouter(getGitHubActivity) {
     router.get('/', async (_req, res) => {
         try {
             const activity = await getGitHubActivity();
-            res.set('Cache-Control', 'public, max-age=21600, stale-if-error=86400');
+            const cacheControl = activity.stale
+                ? 'public, max-age=60, stale-if-error=86400'
+                : 'public, max-age=21600, stale-if-error=86400';
+            res.set('Cache-Control', cacheControl);
             res.json(activity);
         } catch (error) {
             console.error('Unable to load GitHub activity:', error.message);

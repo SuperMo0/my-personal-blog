@@ -1,3 +1,5 @@
+import { getGithubActivitySnapshot, saveGithubActivitySnapshot } from '../db/github-activity-queries.js';
+
 export const GITHUB_AUTHOR = 'SuperMo0';
 
 export const GITHUB_PROJECTS = [
@@ -11,6 +13,7 @@ export const GITHUB_PROJECTS = [
 ];
 
 const DEFAULT_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
+const STALE_RETRY_TTL_MS = 5 * 60 * 1000;
 const DEFAULT_REQUEST_TIMEOUT_MS = 10 * 1000;
 const GITHUB_GRAPHQL_URL = 'https://api.github.com/graphql';
 const PROJECT_CONCURRENCY = 3;
@@ -137,6 +140,8 @@ export function createGitHubActivity({
     token = process.env.GITHUB_TOKEN,
     fetchImpl = globalThis.fetch,
     requestTimeoutMs = DEFAULT_REQUEST_TIMEOUT_MS,
+    loadSnapshot = getGithubActivitySnapshot,
+    saveSnapshot = saveGithubActivitySnapshot,
 } = {}) {
     let cachedActivity = null;
     let expiresAt = 0;
@@ -177,10 +182,25 @@ export function createGitHubActivity({
 
         if (!inFlightActivityPromise) {
             inFlightActivityPromise = fetchActivity()
-                .then((activity) => {
+                .then(async (activity) => {
                     cachedActivity = activity;
                     expiresAt = Date.now() + DEFAULT_CACHE_TTL_MS;
+                    try {
+                        await saveSnapshot(activity);
+                    } catch (error) {
+                        console.error('Unable to persist GitHub activity snapshot:', error.message);
+                    }
                     return activity;
+                })
+                .catch(async (error) => {
+                    const snapshot = await loadSnapshot().catch(() => null);
+                    if (!snapshot) throw error;
+
+                    console.error('Serving the last saved GitHub activity snapshot:', error.message);
+                    const stale = { ...snapshot.payload, stale: true, fetchedAt: snapshot.fetchedAt };
+                    cachedActivity = stale;
+                    expiresAt = Date.now() + STALE_RETRY_TTL_MS;
+                    return stale;
                 })
                 .finally(() => {
                     inFlightActivityPromise = null;
