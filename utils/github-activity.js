@@ -146,6 +146,20 @@ export function createGitHubActivity({
     let cachedActivity = null;
     let expiresAt = 0;
     let inFlightActivityPromise = null;
+
+    async function fetchCalendarOrLastKnownGood() {
+        try {
+            return await fetchContributionCalendar({ author: GITHUB_AUTHOR, token, fetchImpl, requestTimeoutMs });
+        } catch (error) {
+            const snapshot = await loadSnapshot().catch(() => null);
+            const lastKnownGood = snapshot?.payload?.contributionCalendar ?? null;
+            if (lastKnownGood) {
+                console.error('Falling back to the last saved contribution calendar:', error.message);
+            }
+            return lastKnownGood;
+        }
+    }
+
     async function fetchActivity() {
         if (!token) {
             throw new Error('GITHUB_TOKEN is not configured');
@@ -163,7 +177,7 @@ export function createGitHubActivity({
                     requestTimeoutMs,
                 })),
             })),
-            fetchContributionCalendar({ author: GITHUB_AUTHOR, token, fetchImpl, requestTimeoutMs }).catch(() => null),
+            fetchCalendarOrLastKnownGood(),
         ]);
 
         return {
