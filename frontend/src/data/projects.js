@@ -18,7 +18,7 @@ const projects = [
         tagline: 'I contributed candidate, recruiter, and platform-admin workflows to a multi-tenant recruiting platform.',
         stack: ['React', 'TypeScript', 'Python', 'FastAPI', 'PostgreSQL', 'Supabase'],
         repo: 'https://github.com/sync-ngo-sy/sync-hub-v2',
-        live: 'https://app.sync.ngo/',
+        live: 'https://jobs.sync.ngo/recruiter/',
         cover: '/images/sync-hub.webp',
         coverAlt: 'SYNC Hub recruiter dashboard with seeded demo data',
         coverWidth: 1000,
