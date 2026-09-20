@@ -2,10 +2,11 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import cors from 'cors';
 import express from 'express';
-import rateLimit, { type Options as RateLimitOptions } from 'express-rate-limit';
+import type { Options as RateLimitOptions } from 'express-rate-limit';
 import helmet from 'helmet';
 import * as guestQueries from './db/guest-queries.ts';
 import { errorHandler } from './middleware/errorHandler.ts';
+import { createRateLimiter } from './middleware/rateLimit.ts';
 import createAdminRouter from './routes/Admin-route.ts';
 import contributionsRouter from './routes/Contributions-route.ts';
 import createGitHubRouter from './routes/GitHub-route.ts';
@@ -14,6 +15,8 @@ import { createGitHubActivity } from './services/githubActivityService.ts';
 import { articleMeta, injectMeta, renderSitemap, SITE_URL, staticMeta } from './utils/seo.ts';
 
 const ALLOWED_ORIGINS = [SITE_URL, 'http://localhost:5173', 'http://localhost:4173'];
+const DEFAULT_PAGE_RATE_LIMIT: Partial<RateLimitOptions> = { windowMs: 60 * 1000, limit: 300 };
+const PERSON_JSON_LD_SCRIPT_HASH = "'sha256-VqXG0BRcKZKqmVDTM9XPENaVLERXqTpC9jXoH2IHS50='";
 
 async function metaForPath(pathname: string) {
     const staticPage = staticMeta(pathname);
@@ -39,6 +42,7 @@ export interface CreateAppOptions {
     likeRateLimit?: Partial<RateLimitOptions>;
     loginRateLimit?: Partial<RateLimitOptions>;
     demoLoginRateLimit?: Partial<RateLimitOptions>;
+    pageRateLimit?: Partial<RateLimitOptions>;
 }
 
 export function createApp({
@@ -49,6 +53,7 @@ export function createApp({
     likeRateLimit,
     loginRateLimit,
     demoLoginRateLimit,
+    pageRateLimit = DEFAULT_PAGE_RATE_LIMIT,
 }: CreateAppOptions = {}) {
     const app = express();
     const getGitHubActivity = createGitHubActivity({
@@ -66,7 +71,7 @@ export function createApp({
             contentSecurityPolicy: {
                 directives: {
                     defaultSrc: ["'self'"],
-                    scriptSrc: ["'self'"],
+                    scriptSrc: ["'self'", PERSON_JSON_LD_SCRIPT_HASH],
                     styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
                     fontSrc: ["'self'", 'https://fonts.gstatic.com'],
                     imgSrc: ["'self'", 'https:', 'data:'],
@@ -97,15 +102,9 @@ export function createApp({
     if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
         const staticPath = path.join(import.meta.dirname, '../frontend/dist');
         const indexPath = path.join(staticPath, 'index.html');
-        const pageRenderRateLimit = rateLimit({
-            windowMs: 15 * 60 * 1000,
-            max: 100,
-            standardHeaders: true,
-            legacyHeaders: false,
-        });
 
         app.use(express.static(staticPath));
-        app.get('/{*splat}', pageRenderRateLimit, async (req, res) => {
+        app.get('/{*splat}', createRateLimiter(pageRateLimit), async (req, res) => {
             try {
                 const template = await fs.readFile(indexPath, 'utf8');
                 const meta = await metaForPath(req.path);
