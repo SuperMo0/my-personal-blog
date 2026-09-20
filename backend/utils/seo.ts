@@ -61,7 +61,7 @@ export function staticMeta(pathname: string): Meta | null {
 }
 
 export function renderTags(meta: Meta): string {
-    const url = `${SITE_URL}${meta.path === '/' ? '/' : meta.path}`;
+    const url = escapeHtml(`${SITE_URL}${meta.path === '/' ? '/' : meta.path}`);
     const title = escapeHtml(meta.title);
     const description = escapeHtml(meta.description);
 
