@@ -1,9 +1,6 @@
 import assert from 'node:assert/strict';
 import { mock, test } from 'node:test';
 
-// Same rationale as test/guestBlogService.test.ts: pg-mem doesn't emit real
-// Postgres SQLSTATE codes, so this repository-layer error translation is
-// mocked directly rather than exercised through the HTTP integration suite.
 mock.module(new URL('../db/admin-queries.ts', import.meta.url), {
     exports: {
         deleteBlog: async () => {

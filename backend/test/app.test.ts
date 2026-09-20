@@ -734,10 +734,6 @@ describe('Guest comments and likes', () => {
         assert.equal(response.body.message, 'Validation failed');
     });
 
-    // Commenting on a missing blog id (a foreign-key violation) is covered in
-    // test/guestBlogService.test.ts instead: pg-mem doesn't emit real Postgres
-    // SQLSTATE codes, so that translation can't be exercised over HTTP here.
-
     test('lets a visitor like and unlike a published article', async () => {
         const liked = await request(app).post('/api/blogs/101/like').send({ liked: true });
         assert.equal(liked.status, 200);

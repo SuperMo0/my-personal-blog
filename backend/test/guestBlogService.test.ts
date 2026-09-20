@@ -1,9 +1,6 @@
 import assert from 'node:assert/strict';
 import { mock, test } from 'node:test';
 
-// pg-mem doesn't emit real Postgres SQLSTATE codes, so the foreign-key-violation
-// translation in guestBlogService can't be exercised through the HTTP integration
-// suite in test/app.test.ts. This mocks the repository layer directly instead.
 mock.module(new URL('../db/guest-queries.ts', import.meta.url), {
     exports: {
         insertNewComment: async () => {

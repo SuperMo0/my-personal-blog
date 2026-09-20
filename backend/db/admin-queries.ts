@@ -80,7 +80,6 @@ export interface BlogUpdateInput {
 }
 
 export async function updateBlog(id: string, blog: BlogUpdateInput): Promise<boolean> {
-    // Update Blog Safely
     const fields: string[] = [];
     const values: unknown[] = [];
     let queryIndex = 1;

@@ -57,11 +57,6 @@ export function createApp({
         app.set('trust proxy', 1);
     }
 
-    // CSP is off rather than tuned: this app renders guest-submitted comments and
-    // TinyMCE-authored blog content as raw HTML, fetches from the Codeforces API
-    // client-side, loads Google Fonts, and ships an inline JSON-LD script — a
-    // correct policy needs per-directive verification against all of that, which
-    // is follow-up work, not something to guess at here.
     app.use(helmet({ contentSecurityPolicy: false }));
     app.use(cors({ origin: ALLOWED_ORIGINS }));
     app.use('/api/blogs', createGuestRouter({ commentRateLimit, likeRateLimit }));
