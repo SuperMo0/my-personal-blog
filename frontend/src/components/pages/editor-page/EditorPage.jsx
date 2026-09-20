@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { GoEye } from 'react-icons/go';
 import { Link, useParams } from 'react-router';
-import { GoEye } from "react-icons/go";
+import { useAuth } from '../../../auth/AuthContext';
+import api from './../../../utils/Api';
 import MyEditor from '../../editor/Editor';
-import api from './../../../utils/Api.js';
 import Notification from '../../notification/Notification.jsx';
 import Article from '../article/Article.jsx';
-import { useAuth } from '../../../auth/AuthContext.js';
 
 export default function EditorPage({ dark }) {
     const { id } = useParams();
@@ -52,7 +52,7 @@ export default function EditorPage({ dark }) {
 
         const content = editorRef.current.getContent();
         if (!title.trim()) {
-            setNotification("Please add a title before saving.");
+            setNotification('Please add a title before saving.');
             return;
         }
 
@@ -85,6 +85,7 @@ export default function EditorPage({ dark }) {
                                 Preview Mode
                             </h2>
                             <button
+                                type="button"
                                 onClick={() => setPreview(false)}
                                 className="px-4 py-2 border border-(--border-color) rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                             >
@@ -98,17 +99,24 @@ export default function EditorPage({ dark }) {
 
             <div className={`wrapper py-6 ${preview ? 'hidden' : ''}`}>
                 {readOnly && (
-                    <div role="status" className="mb-6 rounded-xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
+                    <div
+                        role="status"
+                        className="mb-6 rounded-xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200"
+                    >
                         Read-only demo — nothing is saved.
                     </div>
                 )}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                    <Link to={'/admin/dashboard'} className="text-(--text-secondary) hover:text-(--text-primary) font-medium transition-colors">
+                    <Link
+                        to={'/admin/dashboard'}
+                        className="text-(--text-secondary) hover:text-(--text-primary) font-medium transition-colors"
+                    >
                         &larr; Back to Dashboard
                     </Link>
 
                     <div className="flex gap-3">
                         <button
+                            type="button"
                             onClick={() => setPreview(true)}
                             className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-(--border-color) bg-(--bg-card) text-(--text-primary) hover:border-(--accent) hover:text-(--accent) transition-all duration-200 shadow-sm font-medium"
                         >
@@ -117,6 +125,7 @@ export default function EditorPage({ dark }) {
                         </button>
 
                         <button
+                            type="button"
                             onClick={handleSave}
                             className="btn-primary shadow-lg hover:shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
@@ -136,7 +145,7 @@ export default function EditorPage({ dark }) {
                 <div className="rounded-xl overflow-hidden shadow-sm border border-(--border-color)">
                     <MyEditor
                         initialValue={initialContent}
-                        handleInit={(evt, editor) => editorRef.current = editor}
+                        handleInit={(_evt, editor) => (editorRef.current = editor)}
                         dark={dark}
                     />
                 </div>

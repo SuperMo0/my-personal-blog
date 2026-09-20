@@ -1,12 +1,10 @@
-import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 export default function MyEditor({ initialValue, handleInit, dark, readOnly = false }) {
-
     return (
         <Editor
-            licenseKey='gpl'
-            key={dark ? "dark-editor" : "light-editor"}
+            licenseKey="gpl"
+            key={dark ? 'dark-editor' : 'light-editor'}
             initialValue={initialValue}
             disabled={readOnly}
             tinymceScriptSrc={'/tinymce/tinymce.min.js'}
@@ -20,11 +18,26 @@ export default function MyEditor({ initialValue, handleInit, dark, readOnly = fa
                 skin: dark ? 'oxide-dark' : 'oxide',
                 content_css: dark ? 'dark' : 'default',
                 plugins: [
-                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
-                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                    'insertdatetime', 'media', 'table', 'preview', 'wordcount', 'codesample'
+                    'advlist',
+                    'autolink',
+                    'lists',
+                    'link',
+                    'image',
+                    'charmap',
+                    'anchor',
+                    'searchreplace',
+                    'visualblocks',
+                    'code',
+                    'fullscreen',
+                    'insertdatetime',
+                    'media',
+                    'table',
+                    'preview',
+                    'wordcount',
+                    'codesample',
                 ],
-                toolbar: 'undo redo | blocks | ' +
+                toolbar:
+                    'undo redo | blocks | ' +
                     'bold italic forecolor | alignleft aligncenter ' +
                     'alignright alignjustify | bullist numlist outdent indent | ' +
                     'removeformat | codesample | help',

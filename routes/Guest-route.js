@@ -1,9 +1,7 @@
-import { Router } from "express";
-import * as controller from './../controllers/guest.js'
-import express from 'express'
+import express, { Router } from 'express';
+import * as controller from './../controllers/guest.js';
 
-
-let router = Router();
+const router = Router();
 
 router.get('/', controller.handleGetAllBlogs);
 
@@ -15,4 +13,4 @@ router.post('/:id', express.json(), controller.handleNewComment);
 
 router.post('/:id/like', express.json(), controller.handleNewLike);
 
-export default router 
+export default router;

@@ -1,12 +1,13 @@
-import express from 'express';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import cors from 'cors';
-import fs from 'fs/promises';
-import path from 'path';
-import guestRouter from './routes/Guest-route.js';
-import adminRouter from './routes/Admin-route.js';
-import createGitHubRouter from './routes/GitHub-route.js';
-import { createGitHubActivity } from './utils/github-activity.js';
+import express from 'express';
 import * as guestQueries from './db/guest-queries.js';
+import adminRouter from './routes/Admin-route.js';
+import contributionsRouter from './routes/Contributions-route.js';
+import createGitHubRouter from './routes/GitHub-route.js';
+import guestRouter from './routes/Guest-route.js';
+import { createGitHubActivity } from './utils/github-activity.js';
 import { articleMeta, injectMeta, renderSitemap, staticMeta } from './utils/seo.js';
 
 async function metaForPath(pathname) {
@@ -25,11 +26,7 @@ async function metaForPath(pathname) {
     }
 }
 
-export function createApp({
-    githubToken,
-    githubFetch,
-    githubRequestTimeoutMs,
-} = {}) {
+export function createApp({ githubToken, githubFetch, githubRequestTimeoutMs } = {}) {
     const app = express();
     const getGitHubActivity = createGitHubActivity({
         token: githubToken,
@@ -40,9 +37,10 @@ export function createApp({
     app.use(cors());
     app.use('/api/blogs', guestRouter);
     app.use('/api/admin', adminRouter);
+    app.use('/api/open-source-contributions', contributionsRouter);
     app.use('/api/github-activity', createGitHubRouter(getGitHubActivity));
 
-    app.get('/sitemap.xml', async (req, res) => {
+    app.get('/sitemap.xml', async (_req, res) => {
         try {
             const blogs = await guestQueries.getAllBlogs();
             res.type('application/xml').send(renderSitemap(blogs));

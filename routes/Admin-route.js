@@ -1,17 +1,15 @@
-import { Router } from "express";
-import express from 'express';
-import * as auth from './../controllers/auth.js'
-import * as controller from './../controllers/admin.js'
-import * as validate from './../utils/validate.js'
+import express, { Router } from 'express';
+import * as controller from './../controllers/admin.js';
+import * as auth from './../controllers/auth.js';
+import * as contributions from './../controllers/contributions.js';
+import * as validate from './../utils/validate.js';
 
-
-let router = Router();
+const router = Router();
 
 router.post('/login', express.json(), auth.authenticateAdmin);
 router.post('/demo-login', auth.authenticateDemo);
 
 router.use(auth.authorizeAccess);
-
 
 router.get('/blogs', controller.handleGetAllBlogs);
 
@@ -25,5 +23,23 @@ router.put('/blogs/:id', auth.requireAdmin, validate.validateParamId, express.js
 
 router.delete('/blogs/:id', auth.requireAdmin, validate.validateParamId, controller.handleDeleteBlog);
 
+router.get('/contributions', contributions.handleGetAllContributions);
 
-export default router
+router.post('/contributions', auth.requireAdmin, express.json(), contributions.handleNewContribution);
+
+router.put(
+    '/contributions/:id',
+    auth.requireAdmin,
+    validate.validateParamId,
+    express.json(),
+    contributions.handleUpdateContribution,
+);
+
+router.delete(
+    '/contributions/:id',
+    auth.requireAdmin,
+    validate.validateParamId,
+    contributions.handleDeleteContribution,
+);
+
+export default router;

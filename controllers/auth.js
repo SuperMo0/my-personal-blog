@@ -1,6 +1,6 @@
-import { compare } from './../utils/password.js'
-import * as queries from './../db/admin-queries.js'
-import * as jwt from './../utils/jwt.js'
+import * as queries from './../db/admin-queries.js';
+import * as jwt from './../utils/jwt.js';
+import { compare } from './../utils/password.js';
 
 const DEFAULT_DEMO_EMAIL = 'demo@my-personal-blog.local';
 
@@ -14,7 +14,6 @@ function createSessionToken(user) {
 }
 
 export async function authenticateAdmin(req, res) {
-
     if (!req.body.email || !req.body.password) {
         return res.status(400).json({ message: 'Email and Password are required' });
     }
@@ -22,25 +21,23 @@ export async function authenticateAdmin(req, res) {
     try {
         const user = await queries.getUserByEmail(req.body.email);
 
-        if (!user || !['admin', 'viewer'].includes(user.role)
-            || !(await compare(req.body.password, user.password))) {
+        if (!user || !['admin', 'viewer'].includes(user.role) || !(await compare(req.body.password, user.password))) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         const token = createSessionToken(user);
         res.json({ token });
-
     } catch (error) {
-        console.error("Login Error:", error);
+        console.error('Login Error:', error);
         return res.status(500).json({ message: 'Internal server error' });
     }
 }
 
-export async function authenticateDemo(req, res) {
+export async function authenticateDemo(_req, res) {
     try {
         const demoEmail = process.env.DEMO_EMAIL || DEFAULT_DEMO_EMAIL;
         const user = await queries.getUserByEmail(demoEmail);
 
-        if (!user || user.role !== 'viewer') {
+        if (user?.role !== 'viewer') {
             return res.status(503).json({ message: 'The read-only demo account is unavailable' });
         }
 
@@ -75,7 +72,7 @@ export function authorizeAccess(req, res, next) {
         const decoded = jwt.verifayToken(match[1]);
         req.user = decoded;
         next();
-    } catch (error) {
+    } catch (_error) {
         return res.status(403).json({ message: 'Invalid or expired token' });
     }
 }

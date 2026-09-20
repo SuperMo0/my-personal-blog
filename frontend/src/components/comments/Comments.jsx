@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { FaUserCircle } from "react-icons/fa";
-import api from './../../utils/Api.js';
+import { useEffect, useState } from 'react';
+import { FaUserCircle } from 'react-icons/fa';
+import api from './../../utils/Api';
 import NewComment from './../new-comment/NewComment.jsx';
 
 export default function Comments({ id }) {
@@ -9,9 +9,11 @@ export default function Comments({ id }) {
     useEffect(() => {
         async function getComments() {
             try {
-                let [result, ok] = await api(`/blogs/${id}/comments`);
+                const [result, ok] = await api(`/blogs/${id}/comments`);
                 if (ok) setComments(result.comments);
-            } catch (e) { console.error(e); }
+            } catch (e) {
+                console.error(e);
+            }
         }
         getComments();
     }, [id]);
@@ -39,9 +41,7 @@ export default function Comments({ id }) {
                                     {new Date(c.created_at).toLocaleDateString()}
                                 </span>
                             </div>
-                            <p className="text-(--text-secondary) leading-relaxed">
-                                {c.content}
-                            </p>
+                            <p className="text-(--text-secondary) leading-relaxed">{c.content}</p>
                         </div>
                     </div>
                 ))}

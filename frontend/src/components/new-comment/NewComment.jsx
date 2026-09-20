@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import api from './../../utils/Api.js';
+import { useState } from 'react';
+import api from './../../utils/Api';
 
 export default function NewComment({ id, handleAddComment }) {
     const [loading, setLoading] = useState(false);
@@ -12,13 +12,13 @@ export default function NewComment({ id, handleAddComment }) {
         const data = Object.fromEntries(new FormData(form));
 
         try {
-            let [result, ok] = await api(`/blogs/${id}`, { method: 'post', body: JSON.stringify(data) });
+            const [result, ok] = await api(`/blogs/${id}`, { method: 'post', body: JSON.stringify(data) });
             if (ok) {
                 handleAddComment(result.comment);
                 form.reset();
             }
-        } catch (e) {
-            console.error("Comment failed");
+        } catch (_e) {
+            console.error('Comment failed');
         } finally {
             setLoading(false);
         }
@@ -28,25 +28,15 @@ export default function NewComment({ id, handleAddComment }) {
         <form onSubmit={handleNewComment} className="bg-(--bg-card) p-6 rounded-xl border border-(--border-color)">
             <h4 className="font-bold mb-4">Leave a reply</h4>
             <div className="grid gap-4">
-                <input
-                    name='author_name'
-                    required
-                    className="input-field"
-                    type="text"
-                    placeholder="Your Name"
-                />
+                <input name="author_name" required className="input-field" type="text" placeholder="Your Name" />
                 <textarea
-                    name='content'
+                    name="content"
                     required
                     rows={3}
                     className="input-field resize-none"
                     placeholder="Share your thoughts..."
                 />
-                <button
-                    type='submit'
-                    disabled={loading}
-                    className="btn-primary self-end"
-                >
+                <button type="submit" disabled={loading} className="btn-primary self-end">
                     {loading ? 'Posting...' : 'Post Comment'}
                 </button>
             </div>
