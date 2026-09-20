@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!frontend/public", "!preview", "!db/sql-schema", "!db/migrations"]
+    "includes": ["**", "!frontend/public", "!preview", "!backend/db/sql-schema", "!backend/db/migrations"]
   },
   "formatter": {
     "enabled": true,

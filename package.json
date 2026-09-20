@@ -1,7 +1,8 @@
 {
-  "name": "my-blog-api",
+  "name": "my-personal-blog",
   "version": "0.0.1",
-  "description": "My personal Blog API to share thoughts and Knowledge",
+  "private": true,
+  "description": "My personal blog: an Express + Postgres API and a React SPA, sharing one deployed process.",
   "homepage": "https://github.com/SuperMo0/MyBlog-Deploy#readme",
   "bugs": {
     "url": "https://github.com/SuperMo0/MyBlog-Deploy/issues"
@@ -12,30 +13,24 @@
   },
   "license": "ISC",
   "author": "Mwafak",
-  "type": "module",
-  "main": "index.js",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
-    "postinstall": "npm install --prefix frontend",
-    "build": "npm run build --prefix frontend",
-    "provision:accounts": "node scripts/provision-accounts.js",
-    "test": "node --experimental-test-module-mocks --test \"test/**/*.test.js\"",
-    "start": "NODE_ENV=production node index.js",
-    "dev": "NODE_ENV=development node --watch index.js"
-  },
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
-    "pg": "^8.16.3"
+    "dev": "npm run dev --workspace=backend",
+    "build": "npm run build --workspace=frontend",
+    "start": "npm run start --workspace=backend",
+    "provision:accounts": "npm run provision:accounts --workspace=backend",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "biome ci .",
+    "format": "biome check --write ."
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.14",
-    "pg-mem": "^3.0.5",
-    "supertest": "^7.1.4"
+    "@biomejs/biome": "2.5.14"
   },
   "engines": {
-    "node": "24.12.0"
+    "node": ">=24.12.0"
   }
 }
