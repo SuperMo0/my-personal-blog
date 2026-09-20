@@ -12,8 +12,8 @@ export default function CV() {
             <header className="mx-auto max-w-3xl text-center">
                 <h1 className="text-4xl font-bold sm:text-5xl">Mwafak Almahaini</h1>
                 <address className="font-interface mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm not-italic text-(--text-secondary) sm:text-base">
-                    <span>Cairo, Egypt · Open to relocate</span>
-                    <a className="transition-colors hover:text-(--accent)" href="tel:+201006864406">+20 100 686 4406</a>
+                    <span>Dubai, UAE · Open to relocate</span>
+                    <a className="transition-colors hover:text-(--accent)" href="tel:+201006864406">+971 54 483 3235</a>
                     <a className="transition-colors hover:text-(--accent)" href="mailto:moofk2002@gmail.com">moofk2002@gmail.com</a>
                     <a
                         className="transition-colors hover:text-(--accent)"
