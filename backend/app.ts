@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import cors from 'cors';
 import express from 'express';
-import type { Options as RateLimitOptions } from 'express-rate-limit';
+import rateLimit, { type Options as RateLimitOptions } from 'express-rate-limit';
 import helmet from 'helmet';
 import * as guestQueries from './db/guest-queries.ts';
 import { errorHandler } from './middleware/errorHandler.ts';
@@ -97,9 +97,15 @@ export function createApp({
     if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
         const staticPath = path.join(import.meta.dirname, '../frontend/dist');
         const indexPath = path.join(staticPath, 'index.html');
+        const pageRenderRateLimit = rateLimit({
+            windowMs: 15 * 60 * 1000,
+            max: 100,
+            standardHeaders: true,
+            legacyHeaders: false,
+        });
 
         app.use(express.static(staticPath));
-        app.get('/{*splat}', async (req, res) => {
+        app.get('/{*splat}', pageRenderRateLimit, async (req, res) => {
             try {
                 const template = await fs.readFile(indexPath, 'utf8');
                 const meta = await metaForPath(req.path);
