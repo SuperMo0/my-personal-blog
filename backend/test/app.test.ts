@@ -538,6 +538,38 @@ describe('GitHub activity', () => {
         assert.equal(response.body.totalCommits, githubRepositories.length);
     });
 
+    test('keeps serving the last known calendar when only the calendar call fails', async () => {
+        const figures = Object.fromEntries(
+            githubRepositories.map((repository) => [
+                repository,
+                { commits: 1, lastActivityAt: '2026-08-01T12:00:00Z' },
+            ]),
+        );
+        const calendarDays = [{ date: '2026-08-18', count: 4 }];
+
+        // First app instance: everything succeeds, including the calendar, and persists a snapshot.
+        const firstApp = createApp({
+            githubToken: 'server-only-test-token',
+            githubFetch: createGitHubFetch(figures, { calendarDays }),
+        });
+        const first = await request(firstApp).get('/api/github-activity');
+        assert.equal(first.status, 200);
+        assert.equal(first.body.contributionCalendar.totalContributions, 4);
+
+        // Second, cold app instance: projects succeed, but the calendar call itself fails.
+        const secondApp = createApp({
+            githubToken: 'server-only-test-token',
+            githubFetch: createGitHubFetch(figures, {
+                calendarResponse: new Response('not json', { status: 500 }),
+            }),
+        });
+        const second = await request(secondApp).get('/api/github-activity');
+
+        assert.equal(second.status, 200);
+        assert.equal(second.body.contributionCalendar.totalContributions, 4);
+        assert.equal(second.body.stale, undefined);
+    });
+
     test('reports a star count per project, defaulting to zero when GitHub omits it', async () => {
         const figures = Object.fromEntries(
             githubRepositories.map((repository, index) => [
