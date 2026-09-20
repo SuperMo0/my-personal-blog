@@ -58,6 +58,11 @@ await testPool.query(`
         position integer not null default 0,
         created_at timestamp default now()
     );
+    create table github_activity_snapshot (
+        id integer primary key default 1,
+        payload jsonb not null,
+        fetched_at timestamp not null default now()
+    );
 `);
 
 const adminPassword = 'correct admin password';
@@ -70,6 +75,7 @@ async function resetDatabase() {
     await testPool.query('delete from blogs');
     await testPool.query('delete from users');
     await testPool.query('delete from open_source_contributions');
+    await testPool.query('delete from github_activity_snapshot');
     await testPool.query(
         `insert into users (id, name, email, password, role)
          values (100, 'Owner', 'owner@example.com', $1, 'admin'),
@@ -427,6 +433,8 @@ describe('read-only demo access', () => {
 });
 
 describe('GitHub activity', () => {
+    beforeEach(() => testPool.query('delete from github_activity_snapshot'));
+
     test('returns authored figures for the seven projects and serves a second request from cache', async () => {
         const initialFigures = Object.fromEntries(
             githubRepositories.map((repository, index) => [
@@ -580,6 +588,46 @@ describe('GitHub activity', () => {
 
         assert.equal(response.status, 503);
         assert.deepEqual(response.body, { message: 'GitHub activity is temporarily unavailable' });
+    });
+
+    test('serves the last saved snapshot when GitHub fails after a prior success', async () => {
+        const figures = Object.fromEntries(
+            githubRepositories.map((repository) => [
+                repository,
+                { commits: 3, lastActivityAt: '2026-08-01T12:00:00Z' },
+            ]),
+        );
+
+        // A first app instance fetches successfully and persists a snapshot to the (shared) database.
+        const firstApp = createApp({
+            githubToken: 'server-only-test-token',
+            githubFetch: createGitHubFetch(figures),
+        });
+        const first = await request(firstApp).get('/api/github-activity');
+        assert.equal(first.status, 200);
+        assert.equal(first.body.stale, undefined);
+
+        // A second, cold app instance can't reach GitHub, but shares the same database snapshot.
+        const secondApp = createApp({
+            githubToken: 'server-only-test-token',
+            githubFetch: async () => new Response('down', { status: 503 }),
+        });
+        const second = await request(secondApp).get('/api/github-activity');
+
+        assert.equal(second.status, 200);
+        assert.equal(second.body.stale, true);
+        assert.equal(second.body.totalCommits, first.body.totalCommits);
+    });
+
+    test('still returns unavailable when GitHub fails and no snapshot was ever saved', async () => {
+        const activityApp = createApp({
+            githubToken: 'server-only-test-token',
+            githubFetch: async () => new Response('down', { status: 503 }),
+        });
+
+        const response = await request(activityApp).get('/api/github-activity');
+
+        assert.equal(response.status, 503);
     });
 });
 

@@ -12,8 +12,7 @@ export default function Home() {
             <header className="max-w-2xl">
                 <h1 className="font-display text-4xl font-bold sm:text-5xl">Writing</h1>
                 <p className="mt-4 text-lg leading-relaxed text-(--text-secondary)">
-                    Notes on code, algorithms, and the practice of building software — mostly things I ran into while
-                    shipping something real.
+                    Notes on code, algorithms, and the practice of building software.
                 </p>
             </header>
 

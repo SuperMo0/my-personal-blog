@@ -13,7 +13,10 @@ export default function createGitHubRouter(getGitHubActivity: () => Promise<GitH
             console.error('Unable to load GitHub activity:', (error as Error).message);
             throw new ServiceUnavailableError('GitHub activity is temporarily unavailable');
         }
-        res.set('Cache-Control', 'public, max-age=21600, stale-if-error=86400');
+        const cacheControl = activity.stale
+            ? 'public, max-age=60, stale-if-error=86400'
+            : 'public, max-age=21600, stale-if-error=86400';
+        res.set('Cache-Control', cacheControl);
         res.json(activity);
     });
 
