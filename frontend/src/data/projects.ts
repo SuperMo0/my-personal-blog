@@ -31,7 +31,7 @@ const projects: Project[] = [
         slug: 'sync-hub',
         name: 'SYNC Hub',
         tagline:
-            'I worked on an AI-powered recruiting platform, building RAG-based candidate matching across recruiter, candidate, and platform-admin workflows.',
+            'I work on an AI-powered recruiting platform, building RAG-based candidate matching across recruiter, candidate, and platform-admin workflows.',
         stack: ['React', 'TypeScript', 'Python', 'FastAPI', 'PostgreSQL', 'Supabase'],
         repo: 'https://github.com/sync-ngo-sy/sync-hub-v2',
         live: 'https://jobs.sync.ngo/recruiter/',
@@ -48,7 +48,7 @@ const projects: Project[] = [
         tagline:
             'Real-time messaging with presence, read receipts, group chats, and cursor-paginated conversation history.',
         stack: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'WebSockets'],
-        repo: 'https://github.com/SuperMo0/my-chatting-app',
+        repo: 'https://github.com/SuperMo0/whatsapp-application',
         live: 'https://chat-lymy.onrender.com/',
         cover: '/images/real-time-chat.webp',
         coverAlt: 'Real-Time Chat messaging interface',

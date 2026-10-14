@@ -8,7 +8,7 @@ export const GITHUB_AUTHOR = 'SuperMo0';
 
 export const GITHUB_PROJECTS = [
     { slug: 'movies-club', repository: 'SuperMo0/movies-club' },
-    { slug: 'real-time-chat', repository: 'SuperMo0/my-chatting-app' },
+    { slug: 'real-time-chat', repository: 'SuperMo0/whatsapp-application' },
     { slug: 'sync-hub', repository: 'sync-ngo-sy/sync-hub-v2' },
     { slug: 'this-blog', repository: 'SuperMo0/my-personal-blog' },
     { slug: 'ai-engineering-curriculum', repository: 'SuperMo0/ai-engineering-curriculum' },
