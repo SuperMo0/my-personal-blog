@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import Footer from '../components/footer/Footer';
 import Header from '../components/header/Header';
@@ -12,7 +13,9 @@ export default function Guest({ handleThemeChange }: { handleThemeChange: () => 
             {!isAdmin && <SmoothScroll />}
             <Header handleThemeChange={handleThemeChange} />
             <main className="grow">
-                <Outlet />
+                <Suspense fallback={null}>
+                    <Outlet />
+                </Suspense>
             </main>
             <Footer />
         </div>

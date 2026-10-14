@@ -52,9 +52,12 @@ export default function CV() {
             <div className="mt-12 bg-(--text-secondary)/10 p-2 sm:p-5">
                 <img
                     src="/images/mwafak-almahaini-cv.webp"
+                    srcSet="/images/mwafak-almahaini-cv.webp 1200w, /images/mwafak-almahaini-cv@2x.webp 2400w"
+                    sizes="(min-width: 960px) 896px, calc(100vw - 3rem)"
                     alt="One-page CV for Mwafak Almahaini"
-                    width="1400"
-                    height="1979"
+                    width="1200"
+                    height="1532"
+                    decoding="async"
                     className="mx-auto h-auto w-full max-w-4xl"
                 />
             </div>

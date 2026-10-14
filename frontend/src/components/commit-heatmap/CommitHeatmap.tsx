@@ -97,7 +97,7 @@ export default function CommitHeatmap() {
                     width={width}
                     height={height}
                     viewBox={`0 0 ${width} ${height}`}
-                    className="min-w-full"
+                    className="heatmap-grid min-w-full"
                     style={{ minWidth: width }}
                 >
                     {WEEKDAY_LABELS.map(
@@ -118,18 +118,15 @@ export default function CommitHeatmap() {
                         week.map((day, dayIndex) => {
                             if (!day) return null;
                             const level = levelFor(day.count, thresholds);
-                            const delay = (weekIndex + dayIndex) * 4;
                             return (
                                 <rect
                                     key={day.date}
-                                    className="heatmap-cell"
                                     x={LABEL_WIDTH + weekIndex * (CELL + GAP)}
                                     y={dayIndex * (CELL + GAP)}
                                     width={CELL}
                                     height={CELL}
                                     rx={2.5}
                                     fill={`var(--data-${level})`}
-                                    style={{ animationDelay: `${delay}ms` }}
                                 >
                                     <title>{`${day.count.toLocaleString()} contribution${day.count === 1 ? '' : 's'} on ${new Date(`${day.date}T00:00:00Z`).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`}</title>
                                 </rect>
