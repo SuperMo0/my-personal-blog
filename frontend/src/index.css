@@ -128,10 +128,10 @@
     }
 }
 
-@keyframes cell-in {
+@keyframes heatmap-in {
     from {
         opacity: 0;
-        transform: scale(0.4);
+        transform: translateY(0.375rem);
     }
     to {
         opacity: 1;
@@ -203,12 +203,13 @@
         color: #67e8f9;
     }
 
-    .heatmap-cell {
-        animation: cell-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    /* One animation for the whole grid: per-cell SVG animations can't be GPU-composited */
+    .heatmap-grid {
+        animation: heatmap-in 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .heatmap-cell {
+        .heatmap-grid {
             animation: none;
         }
     }
