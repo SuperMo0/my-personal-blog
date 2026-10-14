@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import CommitHeatmap from '../commit-heatmap/CommitHeatmap';
 import HeroBeams from '../hero-beams/HeroBeams';
 
+const STACK = ['React', 'TypeScript', 'Node.js', 'Python'];
+
 const container: Variants = {
     hidden: {},
     show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
@@ -28,7 +30,7 @@ export default function Hero() {
                         alt="Mwafak Almahaini"
                         width={640}
                         height={640}
-                        className="mb-5 h-32 w-32 rounded-full border border-(--border-strong) object-cover sm:h-40 sm:w-40"
+                        className="mb-6 h-40 w-40 rounded-full border border-(--border-strong) object-cover sm:h-52 sm:w-52 lg:h-56 lg:w-56"
                     />
 
                     <motion.h1
@@ -38,24 +40,24 @@ export default function Hero() {
                         <span className="text-(--accent)">Mwafak</span> Almahaini
                     </motion.h1>
 
-                    <motion.p variants={item} className="font-display mt-3 text-lg text-(--text-secondary) sm:text-xl">
-                        Full-stack software engineer, Dubai, UAE.
-                    </motion.p>
+                    <motion.div variants={item} className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                        <p className="font-display text-lg text-(--text-secondary) sm:text-xl">
+                            Full-stack software engineer, Dubai, UAE.
+                        </p>
+                        <a
+                            href="#social"
+                            className="font-mono-ui inline-flex items-center gap-2 rounded-full border border-(--border-subtle) px-3 py-1 text-xs font-semibold text-(--text-secondary) transition-colors hover:border-(--ok) hover:text-(--text-primary)"
+                        >
+                            <span className="h-2 w-2 rounded-full bg-(--ok)" aria-hidden="true" />
+                            Open to collaborating
+                        </a>
+                    </motion.div>
 
                     <motion.p
                         variants={item}
-                        className="mt-4 max-w-2xl text-base leading-relaxed text-(--text-secondary) sm:text-lg"
+                        className="mt-5 max-w-2xl text-base leading-relaxed text-(--text-secondary) sm:text-lg"
                     >
-                        I started my full-stack journey with{' '}
-                        <a
-                            href="https://www.theodinproject.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="odin-link"
-                        >
-                            The Odin Project
-                        </a>{' '}
-                        curriculum. I recently joined{' '}
+                        Recently joined{' '}
                         <a
                             href="https://www.linkedin.com/company/sync-sv/"
                             target="_blank"
@@ -64,27 +66,39 @@ export default function Hero() {
                         >
                             SYNC
                         </a>
-                        , and I'm currently working with its software engineering team on an AI powered recruiting
-                        platform.
+                        's engineering team, building an AI-powered recruiting platform with a focus on practical AI
+                        integrations. I started out with{' '}
+                        <a
+                            href="https://www.theodinproject.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="odin-link"
+                        >
+                            The Odin Project
+                        </a>
+                        .
                     </motion.p>
 
                     <motion.p
                         variants={item}
                         className="mt-3 max-w-2xl text-base leading-relaxed text-(--text-secondary) sm:text-lg"
                     >
-                        I work with React, TypeScript, Node.js, and Python, with a focus on practical AI integrations.
+                        I love problem solving: <strong className="codeforces-rank font-semibold">Specialist</strong> on
+                        Codeforces, former ICPC contestant, now chasing Expert.
                     </motion.p>
 
-                    <motion.p
-                        variants={item}
-                        className="mt-3 max-w-2xl text-base leading-relaxed text-(--text-secondary) sm:text-lg"
-                    >
-                        I love problem-solving! I reached{' '}
-                        <strong className="codeforces-rank font-semibold">Specialist</strong> on Codeforces. I have been
-                        an ICPC contestant, and I am currently pursuing the Expert rank.
-                    </motion.p>
+                    <motion.ul variants={item} className="font-mono-ui mt-5 flex flex-wrap gap-2" aria-label="Stack">
+                        {STACK.map((tech) => (
+                            <li
+                                key={tech}
+                                className="rounded-md border border-(--border-subtle) bg-(--surface)/60 px-2.5 py-1 text-xs text-(--text-secondary)"
+                            >
+                                {tech}
+                            </li>
+                        ))}
+                    </motion.ul>
 
-                    <motion.div variants={item} className="mt-6 flex flex-wrap items-center gap-4">
+                    <motion.div variants={item} className="mt-7 flex flex-wrap items-center gap-4">
                         <a href="#projects" className="btn-primary">
                             See what I've built ↓
                         </a>
