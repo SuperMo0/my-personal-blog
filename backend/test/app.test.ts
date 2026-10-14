@@ -99,7 +99,7 @@ const { createApp, default: app } = await import('../app.ts');
 
 const githubRepositories = [
     'SuperMo0/movies-club',
-    'SuperMo0/my-chatting-app',
+    'SuperMo0/whatsapp-application',
     'sync-ngo-sy/sync-hub-v2',
     'SuperMo0/my-personal-blog',
     'SuperMo0/ai-engineering-curriculum',
