@@ -1,15 +1,18 @@
-import { useEffect, useState } from 'react';
+import { lazy, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import RequireAuth from './auth/RequireAuth';
 import RequireGuest from './auth/RequireGuest';
 import About from './components/pages/about/About';
-import Article from './components/pages/article/Article';
-import CV from './components/pages/cv/CV';
-import DashBoard from './components/pages/dashboard/DashBoard';
-import EditorPage from './components/pages/editor-page/EditorPage';
 import Home from './components/pages/home/Home';
-import Login from './components/pages/login/Login';
 import Guest from './layouts/Guest';
+
+// Split out the pages that pull in heavy dependencies (Prism, DOMPurify, the TinyMCE editor)
+// so the landing pages don't download and parse them.
+const Article = lazy(() => import('./components/pages/article/Article'));
+const CV = lazy(() => import('./components/pages/cv/CV'));
+const DashBoard = lazy(() => import('./components/pages/dashboard/DashBoard'));
+const EditorPage = lazy(() => import('./components/pages/editor-page/EditorPage'));
+const Login = lazy(() => import('./components/pages/login/Login'));
 
 function getStoredTheme(): 'dark' | 'light' | null {
     const stored = localStorage.getItem('theme');

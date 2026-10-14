@@ -98,7 +98,7 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="surface-panel bg-(--surface)/75 p-5 backdrop-blur-xl sm:p-7"
+                    className="surface-panel bg-(--surface)/90 p-5 sm:p-7"
                 >
                     <p className="font-mono-ui mb-5 text-xs text-(--text-tertiary)">github.com/SuperMo0</p>
                     <CommitHeatmap />
