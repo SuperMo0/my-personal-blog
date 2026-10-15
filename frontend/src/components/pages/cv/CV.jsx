@@ -56,7 +56,7 @@ export default function CV() {
                     sizes="(min-width: 960px) 896px, calc(100vw - 3rem)"
                     alt="One-page CV for Mwafak Almahaini"
                     width="1200"
-                    height="1532"
+                    height="1541"
                     decoding="async"
                     className="mx-auto h-auto w-full max-w-4xl"
                 />
