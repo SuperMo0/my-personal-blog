@@ -1,0 +1,106 @@
+{
+  "name": "MWAFAK NADER ALMAHAINI",
+  "title": "FULL-STACK SOFTWARE ENGINEER · TYPESCRIPT · PYTHON · REACT · AI",
+  "contact": "+971 54 483 3235 • moofk2002@gmail.com • Dubai, UAE • open to relocation",
+  "links": [
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/mowafk-mha/"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/SuperMo0"
+    },
+    {
+      "label": "Codeforces",
+      "href": "https://codeforces.com/profile/SuperMo"
+    },
+    {
+      "label": "Portfolio",
+      "href": "https://mwafak.dev/about"
+    }
+  ],
+  "education": [
+    {
+      "what": "Bachelor in Computer Science — Nile University, Egypt",
+      "when": "Sep 2021 – Sep 2025"
+    },
+    {
+      "what": "Full-Stack Development Curriculum — The Odin Project",
+      "when": "Jul 2025 – Mar 2026"
+    }
+  ],
+  "experience": [
+    {
+      "role": "Software Engineer | Sync NGO",
+      "when": "Jun 2026 – Present",
+      "bullets": [
+        "Delivered an AI recruitment platform in production, adopted by enterprise clients, owning features end to end across three React portals, a Python API and a background worker.",
+        "Built three React SPAs on a shared internal design system and a generated API client, so every portal consumes the same typed contract; TanStack Router and Query, react-hook-form with Zod.",
+        "Built LLM pipelines that turn unstructured CVs into typed schemas and score candidates with evidence, so I know what production-grade AI output takes beyond a demo.",
+        "Shipped through GitHub Actions CI/CD with separate staging and production deploys, CodeQL scanning and 117 automated tests."
+      ]
+    },
+    {
+      "role": "Shopify Web Developer | Freelance",
+      "when": "Mar 2026 – Jun 2026",
+      "bullets": [
+        "Shipped 3 Shopify storefronts for international clients using Liquid, Vanilla JavaScript, and reusable Web Components.",
+        "Built a webhook-driven restock notification service to automate real-time inventory alerts to subscribed store customers.",
+        "Boosted SEO and performance using structured data and responsive media, with adherence to WCAG AA and Core Web Vitals."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Cinema Discovery & Social Platform Website",
+      "bullets": [
+        "Built a full-stack platform aggregating real-time showtimes from 50+ local cinemas with automated daily synchronization and social features for rating and discussing movies."
+      ]
+    },
+    {
+      "name": "Real-Time Chat Application Website",
+      "bullets": [
+        "Built a real-time WebSocket messaging app with live presence, read receipts, group chats, paginated history, and virtualized message lists."
+      ]
+    },
+    {
+      "name": "Last-Mile Delivery Platform",
+      "stack": "TypeScript, NestJS, Kafka, PostgreSQL/PostGIS",
+      "bullets": [
+        "Building a merchant platform with a public API and an SDK: idempotent shipment creation keyed in Redis, so a retried request replays its response instead of creating a duplicate.",
+        "Merchant dashboard, public tracking site and event-driven services on Kafka, with an explicit shipment state machine."
+      ]
+    },
+    {
+      "name": "Quantum Malware Detection",
+      "bullets": [
+        "Benchmarked classical and quantum ML pipelines for malware classification, comparing SVM, Random Forest, XGBoost, QSVM, and Variational Quantum Classifiers with PCA using Qiskit and PennyLane."
+      ]
+    }
+  ],
+  "achievements": [
+    "Nile University Competitive programming Arena (NUCPA 2025) — NU 1st Place",
+    "ECPC 2025 Finalist — 129th / 1,734 and 4th among 80+ university teams",
+    "Codeforces Specialist — 50+ contests",
+    "Official ICPC Coach — 6 teams preparing for ICPC 2026"
+  ],
+  "certifications": [
+    "MongoDB Associate Developer — MongoDB (Apr 2026)",
+    "DevOps with Docker — University of Helsinki (Jun 2026)",
+    "Machine Learning Specialization — DeepLearning.AI (Jun 2025)",
+    "TypeScript — Frontend Masters (Feb 2026)"
+  ],
+  "skills": [
+    ["Languages", "C++, Python, TypeScript, JavaScript, C#"],
+    ["Frontend", "React, Next.js, HTML5, CSS3, Tailwind"],
+    [
+      "Backend & Data",
+      "FastAPI, Node.js, .NET, REST APIs, OpenAPI, PostgreSQL, MongoDB, pgvector, WebSockets, GraphQL"
+    ],
+    ["AI & ML", "LangGraph, RAG, PyTorch, TensorFlow, Pandas, NumPy, SciPy, XGBoost"],
+    ["Testing & DevOps", "pytest, Vitest/Jest, React Testing Library, Playwright, MSW, Docker, CI/CD, Git"],
+    ["Concepts", "Problem Solving, Design Patterns, W3C Web Standards, HTTP, IETF Standards"]
+  ],
+  "languages": "<b>Arabic</b> (Native) &bull; <b>English</b> (IELTS Band 7)"
+}
