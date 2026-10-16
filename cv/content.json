@@ -53,6 +53,14 @@
   ],
   "projects": [
     {
+      "name": "Last-Mile Delivery Platform",
+      "stack": "TypeScript, NestJS, Kafka, PostgreSQL/PostGIS",
+      "bullets": [
+        "Building a merchant platform with a public API and an SDK: idempotent shipment creation keyed in Redis, so a retried request replays its response instead of creating a duplicate.",
+        "Merchant dashboard, public tracking site and event-driven services on Kafka, with an explicit shipment state machine."
+      ]
+    },
+    {
       "name": "Cinema Discovery & Social Platform Website",
       "bullets": [
         "Built a full-stack platform aggregating real-time showtimes from 50+ local cinemas with automated daily synchronization and social features for rating and discussing movies."
@@ -62,14 +70,6 @@
       "name": "Real-Time Chat Application Website",
       "bullets": [
         "Built a real-time WebSocket messaging app with live presence, read receipts, group chats, paginated history, and virtualized message lists."
-      ]
-    },
-    {
-      "name": "Last-Mile Delivery Platform",
-      "stack": "TypeScript, NestJS, Kafka, PostgreSQL/PostGIS",
-      "bullets": [
-        "Building a merchant platform with a public API and an SDK: idempotent shipment creation keyed in Redis, so a retried request replays its response instead of creating a duplicate.",
-        "Merchant dashboard, public tracking site and event-driven services on Kafka, with an explicit shipment state machine."
       ]
     },
     {
