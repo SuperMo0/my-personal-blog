@@ -1,16 +1,19 @@
 import useDocumentMeta from '../../../utils/useDocumentMeta';
 
 export default function CV() {
-    useDocumentMeta('CV — Mwafak Almahaini', 'CV of Mwafak Almahaini, full-stack software engineer in Dubai, UAE.');
+    useDocumentMeta(
+        'CV — Mwafak Almahaini',
+        'CV of Mwafak Almahaini, full-stack software engineer in Damascus, Syria.',
+    );
 
     return (
         <div className="wrapper max-w-5xl py-16 sm:py-20">
             <header className="mx-auto max-w-3xl text-center">
                 <h1 className="text-4xl font-bold sm:text-5xl">Mwafak Almahaini</h1>
                 <address className="font-interface mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm not-italic text-(--text-secondary) sm:text-base">
-                    <span>Dubai, UAE · Open to relocate</span>
-                    <a className="transition-colors hover:text-(--accent)" href="tel:+971544833235">
-                        +971 54 483 3235
+                    <span>Damascus, Syria · Open to relocate</span>
+                    <a className="transition-colors hover:text-(--accent)" href="tel:+963983632507">
+                        +963 983 632 507
                     </a>
                     <a className="transition-colors hover:text-(--accent)" href="mailto:moofk2002@gmail.com">
                         moofk2002@gmail.com
