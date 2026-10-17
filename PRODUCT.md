@@ -59,7 +59,7 @@ The site is simultaneously the portfolio and one of its exhibits: this blog is a
 ## Brand Commitments
 
 - **Name:** Mwafak Almahaini. The header wordmark sets "Mwafak" in the accent color followed by "Almahaini", which collapses to the first name alone on narrow screens.
-- **Real identity is published**, deliberately: Dubai, UAE · open to relocate; `+971 54 483 3235`; `moofk2002@gmail.com`; LinkedIn `mowafk-mha`; GitHub `SuperMo0`; Codeforces `SuperMo`.
+- **Real identity is published**, deliberately: Damascus, Syria · open to relocate; `+963 983 632 507`; `moofk2002@gmail.com`; LinkedIn `mowafk-mha`; GitHub `SuperMo0`; Codeforces `SuperMo`.
 - **Voice:** first person, plain, specific. Existing copy states numbers where a weaker version would reach for adjectives ("129th of 1,734 participants", "50+ contests", "more than 20 full-stack projects"). No hype, no superlatives about himself.
 - **Downloadable CV** at `/Mwafak-Almahaini-CV.pdf`, kept in sync with the CV page.
 

@@ -4,7 +4,7 @@ export const SITE_URL = 'https://mwafak.dev';
 export const SITE_NAME = 'Mwafak Almahaini';
 
 const DEFAULT_DESCRIPTION =
-    'Mwafak Almahaini is a full-stack software engineer in Dubai. Articles on code, algorithms, and the practice of building software.';
+    'Mwafak Almahaini is a full-stack software engineer in Damascus. Articles on code, algorithms, and the practice of building software.';
 const DEFAULT_IMAGE = `${SITE_URL}/images/mwafak-almahaini.webp`;
 
 interface Meta {
@@ -27,7 +27,7 @@ const STATIC_PAGES: Record<string, { title: string; description: string }> = {
     },
     '/cv': {
         title: `CV — ${SITE_NAME}`,
-        description: 'CV of Mwafak Almahaini, full-stack software engineer in Dubai, UAE.',
+        description: 'CV of Mwafak Almahaini, full-stack software engineer in Damascus, Syria.',
     },
 };
 
