@@ -28,5 +28,3 @@ dist-ssr
 *.sw?
 .env
 .claude
-# Generated from cv/content.json by cv/build.py
-cv/cv.html
