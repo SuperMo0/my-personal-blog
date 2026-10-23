@@ -20,7 +20,7 @@ const projects: Project[] = [
         tagline: 'Egyptian cinema showtimes, refreshed daily, with ratings and social discussion.',
         stack: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'React Query', 'Tailwind CSS'],
         repo: 'https://github.com/SuperMo0/movies-club',
-        live: 'https://movies-club-46a0675ed565.herokuapp.com/',
+        live: 'https://movie-club.net/',
         cover: '/images/movies-club.webp',
         coverAlt: 'Movies Club cinema discovery interface',
         coverWidth: 1000,
