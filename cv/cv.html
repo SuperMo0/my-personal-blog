@@ -44,8 +44,8 @@ li { padding-left: 0; margin-top: 0.4px; }
   <ul>
     <li>Building an AI job-search service for people looking for work in the UAE and Egypt: it finds matching roles, tailors each customer's CV and cover letter, and applies for them.</li>
     <li>Goes beyond job boards: it tracks thousands of companies, contacts them before roles are posted, reaches out to hiring managers directly, and follows up on a recurring schedule.</li>
-    <li>Written in TypeScript so the API, dashboard and Chrome extension share one codebase; Temporal keeps weeks-long follow-ups reliable, and Playwright fills in application forms.</li>
-    <li>Every generated sentence is checked against facts the customer confirmed, so an application never claims something that isn't true.</li>
+    <li>TypeScript monorepo with a Hono API, Next.js dashboard and Chrome extension; Temporal runs the daily matching and weeks-long follow-ups, so work survives restarts and no email is sent twice.</li>
+    <li>Each customer's data is walled off with Postgres row-level security and encrypted under their own key, so deleting an account means destroying one key; 190 test files run against real Postgres in CI.</li>
   </ul>
 </div>
 <div class="entry">
@@ -53,7 +53,7 @@ li { padding-left: 0; margin-top: 0.4px; }
   <ul>
     <li>Delivered an AI recruitment platform in production for enterprise clients, owning features across three React portals, a Python API and a background worker.</li>
     <li>Built the portals on a shared design system and a generated API client (TanStack Router and Query, react-hook-form, Zod).</li>
-    <li>Built LLM pipelines that turn CVs into typed schemas and score candidates with evidence.</li>
+    <li>Built RAG candidate search (CV chunking, embeddings, pgvector ranking and reranking) and LLM pipelines that turn CVs into typed schemas and score candidates with evidence.</li>
     <li>Shipped through GitHub Actions CI/CD with staging and production deploys, CodeQL and 117 automated tests.</li>
   </ul>
 </div>
