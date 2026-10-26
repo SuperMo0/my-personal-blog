@@ -44,9 +44,8 @@ li { padding-left: 0; margin-top: 0.4px; }
   <ul>
     <li>Building an AI job-search service for people looking for work in the UAE and Egypt: it finds matching roles, tailors each customer's CV and cover letter, and applies for them.</li>
     <li>Crawls 1,000+ company careers sites and ATS boards, tracking 65,000+ open jobs, and goes beyond them: it contacts companies before roles are posted, reaches hiring managers directly and follows up on a schedule.</li>
-    <li>Matching narrows each day's jobs with SQL filters, pgvector search and model scoring; Temporal runs it and the weeks&#8209;long follow-ups, so work survives restarts and no email is sent twice.</li>
-    <li>Each customer's data is isolated with Postgres row-level security and encrypted under their own key, so deleting an account means destroying one key; 190 test files run against real Postgres.</li>
-    <li>Security-reviewed against the OWASP Top 10, API Top 10 and LLM Top 10, then hardened outbound requests against SSRF, file uploads and the dependency supply chain.</li>
+    <li>Temporal runs the daily matching (SQL filters, pgvector search, then model scoring) and the weeks&#8209;long follow-ups, so work survives restarts and no email is sent twice.</li>
+    <li>Each customer's data is isolated with Postgres row-level security and encrypted under their own key, and the system was security-reviewed against the OWASP Top 10 for web, APIs and LLMs.</li>
   </ul>
 </div>
 <div class="entry">
