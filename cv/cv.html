@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mwafak Almahaini CV</title>
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "DejaVu Sans", sans-serif; font-size: 8.3pt; line-height: 1.27; color: #1a1a1a; padding: 10.1mm 14mm 0; -webkit-print-color-adjust: exact; }
+a { color: #2a5db0; text-decoration: none; }
+header { text-align: center; }
+.name { font-size: 21.3px; line-height: 26px; font-weight: 700; color: #1f3352; letter-spacing: 0.03em; }
+.tagline { font-size: 12px; line-height: 15px; font-weight: 700; color: #12203a; margin-top: 2px; }
+.contact { font-size: 12px; line-height: 15px; color: #444; }
+.contact a { text-decoration: underline; }
+h2 { font-size: 14px; line-height: 17px; font-weight: 700; color: #1f3352; letter-spacing: 0.075em; margin-top: 6px; border-bottom: 1.3px solid #c3ccd8; padding-bottom: 1px; margin-bottom: 2px; }
+header + h2 { margin-top: 3px; }
+.entry { margin-top: 3px; }
+.head { }
+.head b, .skills b { color: #12203a; }
+.head a { font-weight: 700; }
+em { font-style: italic; }
+ul { padding-left: 16px; }
+li { padding-left: 0; margin-top: 0.4px; }
+.plain li { }
+.skills p { }
+</style>
+</head>
+<body>
+<header>
+  <div class="name">MWAFAK NADER ALMAHAINI</div>
+  <div class="tagline">FULL-STACK SOFTWARE ENGINEER · TYPESCRIPT · NESTJS · PYTHON · REACT · AI</div>
+  <div class="contact">+971 54 483 3235 • moofk2002@gmail.com • Dubai, UAE &amp; Damascus, Syria • open to relocation</div>
+  <div class="contact"><a href="https://www.linkedin.com/in/mowafk-mha/">LinkedIn</a> • <a href="https://github.com/SuperMo0">GitHub</a> • <a href="https://codeforces.com/profile/SuperMo">Codeforces</a> • <a href="https://mwafak.dev/about">Portfolio</a></div>
+</header>
+
+<h2>EDUCATION</h2>
+<p class="head">Bachelor in Computer Science — Nile University, Egypt — <em>Sep 2021 – Sep 2025</em></p>
+<p class="head">Full-Stack Development Curriculum — The Odin Project — <em>Jul 2025 – Mar 2026</em></p>
+
+<h2>EXPERIENCE</h2>
+<div class="entry">
+  <p class="head"><b>Founder &amp; Software Engineer |</b> <a href="https://jobanji.app/">Jobanji</a> — <em>Feb 2026 – Present — TypeScript, Hono, Temporal, PostgreSQL, Next.js, Playwright</em></p>
+  <ul>
+    <li>Building an AI job-search service for people looking for work in the UAE and Egypt: it finds matching roles, tailors each customer's CV and cover letter, and applies for them.</li>
+    <li>Goes beyond job boards: it tracks thousands of companies, contacts them before roles are posted, reaches out to hiring managers directly, and follows up on a recurring schedule.</li>
+    <li>Written in TypeScript so the API, dashboard and Chrome extension share one codebase; Temporal keeps weeks-long follow-ups reliable, and Playwright fills in application forms.</li>
+    <li>Every generated sentence is checked against facts the customer confirmed, so an application never claims something that isn't true.</li>
+  </ul>
+</div>
+<div class="entry">
+  <p class="head"><b>Software Engineer |</b> <a href="https://sync.ngo/">Sync NGO</a> — <em>Jun 2026 – Present</em></p>
+  <ul>
+    <li>Delivered an AI recruitment platform in production for enterprise clients, owning features across three React portals, a Python API and a background worker.</li>
+    <li>Built the portals on a shared design system and a generated API client (TanStack Router and Query, react-hook-form, Zod).</li>
+    <li>Built LLM pipelines that turn CVs into typed schemas and score candidates with evidence.</li>
+    <li>Shipped through GitHub Actions CI/CD with staging and production deploys, CodeQL and 117 automated tests.</li>
+  </ul>
+</div>
+<div class="entry">
+  <p class="head"><b>Shopify Web Developer | Freelance</b> — <em>Mar 2026 – Jun 2026</em></p>
+  <ul>
+    <li>Shipped 3 Shopify storefronts for international clients using Liquid, Vanilla JavaScript, and reusable Web Components.</li>
+    <li>Built a webhook-driven restock notification service for real-time inventory alerts.</li>
+    <li>Improved SEO and performance with structured data and responsive media, to WCAG AA and Core Web Vitals.</li>
+  </ul>
+</div>
+
+<h2>PROJECTS</h2>
+<div class="entry">
+  <p class="head"><b>Last-Mile Delivery Platform</b> — <em>TypeScript, NestJS, Kafka, PostgreSQL/PostGIS, Redis, OpenTelemetry (in progress)</em></p>
+  <ul>
+    <li>Building a merchant platform with a public API and an SDK: idempotent shipment creation keyed in Redis, so a retried request replays its response instead of creating a duplicate.</li>
+    <li>Merchant dashboard, public tracking site and event-driven services on Kafka, with distributed tracing through OpenTelemetry and an explicit shipment state machine.</li>
+  </ul>
+</div>
+<div class="entry">
+  <p class="head"><b>MovieClub</b> (<a href="https://movie-club.net/" style="font-weight:400">movie-club.net</a>) — <em>TypeScript, React, TanStack Query, Express, Prisma, PostgreSQL</em></p>
+  <ul>
+    <li>Live full-stack platform aggregating cinema showtimes from 50+ local cinemas with an automated daily sync, plus social features for rating and discussing movies.</li>
+    <li>npm-workspaces monorepo with a shared types package and Zod validation across the API boundary; JWT auth, rate limiting, Vitest tests, and CI with CodeQL and dependency review.</li>
+  </ul>
+</div>
+<div class="entry">
+  <p class="head"><b>WhatsApp Application</b> — <em>React, TanStack Query, Zustand, Socket.IO, Express, Prisma, PostgreSQL</em></p>
+  <ul>
+    <li>Full-stack real-time chat with friend requests, live online status, read receipts and paginated message history; shared Zod schemas between client and server, Vitest tests, and CI with CodeQL.</li>
+  </ul>
+</div>
+
+<h2>ACHIEVEMENTS</h2>
+<ul>
+  <li>Nile University Competitive programming Arena (NUCPA 2025) — NU 1st Place</li>
+  <li>ECPC 2025 Finalist — 129th / 1,734 and 4th among 80+ university teams</li>
+  <li>Codeforces Specialist — 50+ contests</li>
+  <li>Official ICPC Coach — 6 teams preparing for ICPC 2026</li>
+</ul>
+
+<h2>CERTIFICATIONS</h2>
+<ul>
+  <li>MongoDB Associate Developer — MongoDB (Apr 2026)</li>
+  <li>DevOps with Docker — University of Helsinki (Jun 2026)</li>
+  <li>Machine Learning Specialization — DeepLearning.AI (Jun 2025)</li>
+  <li>TypeScript — Frontend Masters (Feb 2026)</li>
+</ul>
+
+<h2>SKILLS</h2>
+<div class="skills">
+  <p><b>Languages:</b> TypeScript, Python, JavaScript, C++, C#, SQL</p>
+  <p><b>Frontend:</b> React, Next.js, TanStack Query/Router, Zustand, HTML5, CSS3, Tailwind</p>
+  <p><b>Backend &amp; Data:</b> NestJS, Hono, Node.js, Express, FastAPI, .NET, REST APIs, Temporal, Prisma, Drizzle, PostgreSQL/PostGIS, Redis, Kafka, MongoDB, pgvector, WebSockets</p>
+  <p><b>AI &amp; ML:</b> LLM pipelines, RAG, OpenAI API, LangGraph, PyTorch, TensorFlow, Pandas, NumPy, XGBoost</p>
+  <p><b>Testing &amp; DevOps:</b> pytest, Vitest, Playwright, React Testing Library, Docker, Fly.io, GitHub Actions CI/CD, CodeQL, OpenTelemetry, pnpm/Turborepo, Git</p>
+  <p><b>Spoken:</b> Arabic (Native) • English (IELTS Band 7)</p>
+</div>
+
+<h2>OPEN-SOURCE CONTRIBUTIONS</h2>
+<p><a href="https://github.com/nodejs/node/pull/62302">nodejs/node #62302</a> • <a href="https://github.com/langchain-ai/docs/pull/4731">langchain-ai/docs #4731</a> • <a href="https://github.com/mdn/content/pull/42982">mdn/content #42982</a> • <a href="https://github.com/tj/commander.js/pull/2641">tj/commander.js #2641</a></p>
+</body>
+</html>
