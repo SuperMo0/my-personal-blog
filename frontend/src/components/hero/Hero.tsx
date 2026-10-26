@@ -41,7 +41,7 @@ export default function Hero() {
                     </motion.h1>
 
                     <motion.p variants={item} className="font-display mt-3 text-lg text-(--text-secondary) sm:text-xl">
-                        Full-stack software engineer, Damascus, Syria.
+                        Full-stack software engineer in Dubai and Damascus, open to relocating.
                     </motion.p>
 
                     <motion.p
