@@ -40,12 +40,13 @@ li { padding-left: 0; margin-top: 0.4px; }
 
 <h2>EXPERIENCE</h2>
 <div class="entry">
-  <p class="head"><b>Founder &amp; Software Engineer |</b> <a href="https://jobanji.app/">Jobanji</a> — <em>Feb 2026 – Present — TypeScript, Hono, Temporal, PostgreSQL, Next.js, Playwright</em></p>
+  <p class="head"><b>Founder &amp; Software Engineer |</b> <a href="https://jobanji.app/">Jobanji</a> — <em>Feb 2026 – Present — TypeScript, Hono, Temporal, PostgreSQL, Next.js</em></p>
   <ul>
     <li>Building an AI job-search service for people looking for work in the UAE and Egypt: it finds matching roles, tailors each customer's CV and cover letter, and applies for them.</li>
-    <li>Goes beyond job boards: it tracks thousands of companies, contacts them before roles are posted, reaches out to hiring managers directly, and follows up on a recurring schedule.</li>
-    <li>TypeScript monorepo with a Hono API, Next.js dashboard and Chrome extension; Temporal runs the daily matching and weeks-long follow-ups, so work survives restarts and no email is sent twice.</li>
-    <li>Each customer's data is walled off with Postgres row-level security and encrypted under their own key, so deleting an account means destroying one key; 190 test files run against real Postgres in CI.</li>
+    <li>Crawls 1,000+ company careers sites and ATS boards, tracking 65,000+ open jobs, and goes beyond them: it contacts companies before roles are posted, reaches hiring managers directly and follows up on a schedule.</li>
+    <li>Matching narrows each day's jobs with SQL filters, pgvector search and model scoring; Temporal runs it and the weeks&#8209;long follow-ups, so work survives restarts and no email is sent twice.</li>
+    <li>Each customer's data is isolated with Postgres row-level security and encrypted under their own key, so deleting an account means destroying one key; 190 test files run against real Postgres.</li>
+    <li>Security-reviewed against the OWASP Top 10, API Top 10 and LLM Top 10, then hardened outbound requests against SSRF, file uploads and the dependency supply chain.</li>
   </ul>
 </div>
 <div class="entry">
